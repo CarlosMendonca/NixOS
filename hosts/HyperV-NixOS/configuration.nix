@@ -2,6 +2,10 @@
     imports = [
         ./hardware-configuration.nix
         ../../modules
+
+        ../../services/openssh.nix
+
+        ../../users/carlos.nix
     ];
 
     boot.loader = {
