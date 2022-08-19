@@ -24,5 +24,17 @@
         ];
       };
     };
+
+    HyperV-NixOS = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/HyperV-NixOS/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # doc: https://nix-community.github.io/home-manager/nixos-options.html#nixos-opt-home-manager.useGlobalPkgs
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
+    };
   };
 }

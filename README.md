@@ -7,8 +7,8 @@ My NixOS configuration repo.
 Repo is organized around the hosts that get configured:
 
 * X299-NixOS: Intel desktop
+* HyperV-NixOS: Hyper-V-based VM
 * Z13-NixOS: AMD-based laptop
-* HyperV-NixOSnn: Hyper-V-based VMs
 
 ## Usage
 
