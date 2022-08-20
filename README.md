@@ -50,7 +50,7 @@ $ nix flake show --experimental-features 'nix-command flakes'
 To install this flake, simply run the nix-install command while specifying the path to the flake (current dir, in this case) and which specific output (the machine hostname, in this case):
 
 ```
-$ nix-install --flake .#HyperV-NixOS
+$ nixos-install --flake .#HyperV-NixOS
 ```
 
 If everything went well, you can `reboot now` to boot from the disk. Going forward, you should be able to remote login via ssh provided that you configured the public key on the `users/<username>.nix` file.
