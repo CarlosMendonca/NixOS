@@ -5,6 +5,7 @@
 
         ../../services/openssh.nix
         ../../services/xserver.i3.nix
+        ../../services/xrdp.nix
 
         ./users/carlos.nix
     ];
