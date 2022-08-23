@@ -6,7 +6,7 @@
         ../../services/openssh.nix
         ../../services/xserver.i3.nix
 
-        ../../users/carlos.nix
+        ./users/carlos.nix
     ];
 
     boot.loader = {
