@@ -2,6 +2,7 @@
     imports = [
         ./hardware-configuration.nix
         ../../modules
+        ../../modules/fonts.nix
 
         ../../services/openssh.nix
         ../../services/xserver.i3.nix
