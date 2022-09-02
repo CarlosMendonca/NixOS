@@ -1,9 +1,9 @@
 { pkgs, lib, ... }: {
 
-    # Make sure that the i3 socket is open before trying to start polybar. Documentation: https://github.com/Zabot/nixconfig/blob/master/home/desktop/polybar/default.nix
+    # Start polybar with xserver, as determined by home-manager's hm-graphical-session.target sync point
     systemd.user.services.polybar = {
-        Unit.After = [ "i3-session.target" ];
-        Install.WantedBy = lib.mkForce [ "i3-session.target" ];
+        Unit.After = [ "hm-graphical-session.target" ];
+        Install.WantedBy = lib.mkForce [ "hm-graphical-session.target" ];
     };
 
     services.polybar = {

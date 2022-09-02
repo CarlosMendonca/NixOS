@@ -12,16 +12,6 @@
         dmenu
         i3status
       ];
-
-      # Make sure DISPLAY and XAUTHORITY are available for systemd by executing what https://github.com/systemd/systemd/blob/main/xorg/50-systemd-user.sh would. Source: https://git.0xee.eu/0xee/nix-home/src/branch/master/home.nix
-      #extraSessionCommands = ''
-      #  export DISPLAY XAUTHORITY
-      #  systemctl --user import-environment DISPLAY XAUTHORITY
-
-      #  if command -v dbus-update-activation-environment >/dev/null 2>&1; then
-      #      dbus-update-activation-environment DISPLAY XAUTHORITY
-      #  fi
-      #'';
     };
   };
 }
