@@ -9,8 +9,8 @@
       package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
         # TODO check whether these are still necessary
-        dmenu
-        i3status
+        # dmenu
+        # i3status
       ];
     };
   };

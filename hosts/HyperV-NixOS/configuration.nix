@@ -5,6 +5,7 @@
         ../../modules/fonts.nix
 
         ../../services/openssh.nix
+        ../../services/picom.nix
         ../../services/xserver.i3.nix
         ../../services/xrdp.nix
 

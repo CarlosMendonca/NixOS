@@ -1,13 +1,19 @@
 { pkgs, ... }: {
     fonts = {
         fonts = with pkgs; [
-            roboto
+            iosevka
+            ubuntu_font_family
             (nerdfonts.override { fonts = [ "Iosevka" "Ubuntu" ]; })
         ];
         
         fontconfig.defaultFonts = {
-            monospace = [ "Iosevka Nerd Font" ];
-            sansSerif = [ "Ubuntu Nerd Font" ];
+            monospace = [
+                "Iosevka Nerd Font"
+                "Iosevka"
+            ];
+            sansSerif = [ "Ubuntu" ];
         };
+
+        fontDir.enable = true;
     };
 }
