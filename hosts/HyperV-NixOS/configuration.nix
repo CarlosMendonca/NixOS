@@ -3,13 +3,13 @@
         ./hardware-configuration.nix
         ../../modules
         ../../modules/fonts.nix
-
+        
         ../../services/openssh.nix
-        ../../services/picom.nix
-        ../../services/xserver.i3.nix
-        ../../services/xrdp.nix
+
+        ./configuration.gui.i3.nix
 
         ./users/carlos.nix
+        ./users/carlos.gui.i3.nix
     ];
 
     boot.loader = {
