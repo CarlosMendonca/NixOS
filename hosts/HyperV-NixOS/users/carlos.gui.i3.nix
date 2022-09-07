@@ -10,7 +10,7 @@
       # Graphical environment
       ../../../modules/programs/rofi.home.nix
       ../../../services/polybar.home.nix
-      ../../../services/xrdp.home.nix
+      ../../../services/xrdp.i3.home.nix
       ../../../services/xserver.i3.home.nix
     ];
   };

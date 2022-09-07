@@ -6,10 +6,10 @@
         
         ../../services/openssh.nix
 
-        ./configuration.gui.i3.nix
+        ./configuration.gui.gnome.nix
 
         ./users/carlos.nix
-        ./users/carlos.gui.i3.nix
+        ./users/carlos.gui.gnome.nix
     ];
 
     boot.loader = {
