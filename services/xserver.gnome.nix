@@ -2,36 +2,36 @@
   services.xserver = {
     enable = true;
     exportConfiguration = true;
-    displayManager.startx.enable = true;
+    displayManager.gdm.enable = true;
     
     desktopManager.gnome.enable = true;
 };
     
   environment.gnome.excludePackages = [
-    pkgs.gnome-photos
-    pkgs.gnome-tour
+    # pkgs.gnome-photos
+    # pkgs.gnome-tour
 
-    pkgs.gnome.atomix
-    pkgs.gnome.cheese
-    pkgs.gnome.geary
-    pkgs.gnome.gedit
+    # pkgs.gnome.atomix
+    # pkgs.gnome.cheese
+    # pkgs.gnome.geary
+    # pkgs.gnome.gedit
 
-    pkgs.gnome.gnome-calculator
-    pkgs.gnome.gnome-characters
-    pkgs.gnome.gnome-clocks
-    pkgs.gnome.gnome-contacts
-    pkgs.gnome.gnome-maps
-    pkgs.gnome.gnome-music
+    # pkgs.gnome.gnome-calculator
+    # pkgs.gnome.gnome-characters
+    # pkgs.gnome.gnome-clocks
+    # pkgs.gnome.gnome-contacts
+    # pkgs.gnome.gnome-maps
+    # pkgs.gnome.gnome-music
     # pkgs.gnome.gnome-terminal
-    pkgs.gnome.gnome-weather
+    # pkgs.gnome.gnome-weather
 
-    pkgs.gnome.hitori
-    pkgs.gnome.iagno
-    pkgs.gnome.tali
-    pkgs.gnome.totem
+    # pkgs.gnome.hitori
+    # pkgs.gnome.iagno
+    # pkgs.gnome.tali
+    # pkgs.gnome.totem
 
-    pkgs.epiphany
-    pkgs.evince
+    # pkgs.epiphany
+    # pkgs.evince
   ];
 
   environment.systemPackages = [
