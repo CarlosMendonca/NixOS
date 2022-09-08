@@ -8,7 +8,6 @@
 
         ./configuration.gui.gnome.nix
 
-        ./users/carlos.nix
         ./users/carlos.gui.gnome.nix
     ];
 
@@ -16,6 +15,8 @@
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
     };
+    
+    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.hostName = "HyperV-NixOS";
     time.timeZone = "America/New_York";

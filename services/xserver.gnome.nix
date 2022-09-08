@@ -1,15 +1,19 @@
 { pkgs, ... }: {
   services.xserver = {
-    autorun = true;
     enable = true;
     # exportConfiguration = true;
-    displayManager.lightdm.enable = true;
+    # displayManager.lightdm.enable = true;
+    displayManager.gdm.enable = true;
     
     desktopManager.gnome.enable = true;
     desktopManager.xterm.enable = false;
 
     layout = "us";
-};
+  };
+
+  users.users.gdm = {
+    extraGroups = [ "video" ];
+  };
     
   # environment.gnome.excludePackages = [
     # pkgs.gnome-photos

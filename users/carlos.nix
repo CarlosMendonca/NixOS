@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
     home-manager.users.carlos = {
         imports = [
             ../modules/home.nix

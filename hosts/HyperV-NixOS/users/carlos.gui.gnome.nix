@@ -1,4 +1,7 @@
 { lib, pkgs, ... }: {
+  imports = [
+    ./carlos.gui.nix
+  ];
   home-manager.users.carlos = {
     imports = [
       # CLI programs
