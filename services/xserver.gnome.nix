@@ -1,13 +1,17 @@
 { pkgs, ... }: {
   services.xserver = {
+    autorun = true;
     enable = true;
-    exportConfiguration = true;
-    displayManager.gdm.enable = true;
+    # exportConfiguration = true;
+    displayManager.lightdm.enable = true;
     
     desktopManager.gnome.enable = true;
+    desktopManager.xterm.enable = false;
+
+    layout = "us";
 };
     
-  environment.gnome.excludePackages = [
+  # environment.gnome.excludePackages = [
     # pkgs.gnome-photos
     # pkgs.gnome-tour
 
@@ -32,11 +36,11 @@
 
     # pkgs.epiphany
     # pkgs.evince
-  ];
+  # ];
 
-  environment.systemPackages = [
-    pkgs.gnome.gnome-tweaks
-    pkgs.gnome.gnome-shell-extensions
-    pkgs.gnome.dconf-editor
-  ];
+  # environment.systemPackages = [
+    # pkgs.gnome.gnome-tweaks
+    # pkgs.gnome.gnome-shell-extensions
+    # pkgs.gnome.dconf-editor
+  # ];
 }

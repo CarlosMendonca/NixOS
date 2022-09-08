@@ -39,5 +39,5 @@
     #     '';
     #     executable = true;
     # };
-    xsession.enable = true;
+    # xsession.enable = true;
 }

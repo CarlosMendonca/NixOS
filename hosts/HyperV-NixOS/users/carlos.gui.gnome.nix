@@ -8,8 +8,8 @@
       ../../../modules/programs/vscode.home.nix
 
       # Graphical environment
-      ../../../services/xrdp.gnome.home.nix
-      ../../../services/xserver.gnome.home.nix
+      # ../../../services/xrdp.gnome.home.nix
+      # ../../../services/xserver.gnome.home.nix
     ];
   };
 }
