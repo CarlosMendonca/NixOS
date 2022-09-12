@@ -1,7 +1,20 @@
 { config, pkgs, ... }: {
   services.xrdp = {
     enable = true;
-    defaultWindowManager = "gnome-session"; # doesn't matter because we write our own ~/startwm.sh script
     openFirewall = true;
   };
+
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+       if ((action.id == "org.freedesktop.color-manager.create-device"
+        || action.id == "org.freedesktop.color-manager.create-profile"
+        || action.id == "org.freedesktop.color-manager.delete-device"
+        || action.id == "org.freedesktop.color-manager.delete-profile"
+        || action.id == "org.freedesktop.color-manager.modify-device"
+        || action.id == "org.freedesktop.color-manager.modify-profile")
+        && subject.isInGroup("{users}")) {
+          return polkit.Result.YES;
+      }
+    });
+  '';
 }
