@@ -5,7 +5,7 @@
         ];
 
         programs.git = {
-          userName = "Carlos Mendonca";
+          userName = "Carlos Mendonça";
           userEmail = "CarlosMendonca@users.noreply.github.com";
         };
     };
