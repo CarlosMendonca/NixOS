@@ -6,7 +6,9 @@
     displayManager.gdm.enable = true;
     
     desktopManager.gnome.enable = true;
-    desktopManager.xterm.enable = false;
+    
+    # desktopManager.xterm.enable = false;
+    excludePackages = [ pkgs.xterm ];
 
     layout = "us";
   };

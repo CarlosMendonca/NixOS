@@ -11,8 +11,12 @@
         || action.id == "org.freedesktop.color-manager.delete-device"
         || action.id == "org.freedesktop.color-manager.delete-profile"
         || action.id == "org.freedesktop.color-manager.modify-device"
-        || action.id == "org.freedesktop.color-manager.modify-profile")
-        && subject.isInGroup("{users}")) {
+        || action.id == "org.freedesktop.color-manager.modify-profile"
+        || action.id == "org.freedesktop.login1.hibernate"
+        || action.id == "org.freedesktop.login1.power-off"
+        || action.id == "org.freedesktop.login1.reboot"
+        || action.id == "org.freedesktop.login1.suspend")
+        && subject.isInGroup("users")) {
           return polkit.Result.YES;
       }
     });
