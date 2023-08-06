@@ -7,5 +7,7 @@
     imports = [
       # CLI programs
     ];
+    
+    home.stateVersion = "22.05";
   };
 }

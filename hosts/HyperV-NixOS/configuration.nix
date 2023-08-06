@@ -11,6 +11,10 @@
         ./users/carlos.gui.gnome.nix
     ];
 
+    nixpkgs.config.permittedInsecurePackages = [
+      "openssl-1.1.1v"
+    ];
+
     boot.loader = {
         systemd-boot.enable = true;
         efi.canTouchEfiVariables = true;
