@@ -1,10 +1,7 @@
 { pkgs, ... }: {
   services.xserver = {
     enable = true;
-    # exportConfiguration = true;
-    # displayManager.lightdm.enable = true;
     displayManager.gdm.enable = true;
-    
     desktopManager.gnome.enable = true;
     
     # desktopManager.xterm.enable = false;
