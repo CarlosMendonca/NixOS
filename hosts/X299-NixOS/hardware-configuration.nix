@@ -30,5 +30,7 @@
         package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
+    hardware.cpu.intel.updateMicrocode = true;
+
     nixpkgs.config.allowUnfree = true;
 }
