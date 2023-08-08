@@ -26,8 +26,8 @@
     hardware.nvidia = {
         modesetting.enable = true;
         open = true;
-        nvidiaSetting = true;
-        # pacakge = config.boot.kernelPackages.nvidiaPackages.stable;
+        nvidiaSettings = true;
+        package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     nixpkgs.config.allowUnfree = true;
