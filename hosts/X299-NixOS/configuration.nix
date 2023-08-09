@@ -2,7 +2,17 @@
     imports = [
         ./hardware-configuration.nix
         ../../modules
-        ../../modules/networking.nix
+        ../../modules/fonts.nix
+        
+        ../../services/openssh.nix
+
+        ./configuration.gui.gnome.nix
+
+        ./users/carlos.gui.gnome.nix
+    ];
+
+    nixpkgs.config.permittedInsecurePackages = [
+      "openssl-1.1.1v"
     ];
 
     boot.loader = {
