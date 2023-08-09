@@ -17,7 +17,7 @@
     ];
 
     boot.loader = {
-        systemd-boot {
+        systemd-boot = {
             enable = true;
             # Motherboard-specific workaround. BIOS not always renders on high-resolution and this instructs
             #   systemd-boot to always render on max resoltion instead of following the BIOS current text mode.
