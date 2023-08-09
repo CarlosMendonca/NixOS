@@ -3,6 +3,7 @@
         ./hardware-configuration.nix
         ../../modules
         ../../modules/fonts.nix
+        ../../modules/sound.nix
         
         ../../services/openssh.nix
 

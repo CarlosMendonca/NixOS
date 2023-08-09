@@ -4,12 +4,16 @@
 #      https://nixos.wiki/wiki/PipeWire
 
 {
-  sound.enable = true; # saves sound state in alsamixer
+  hardware.pulseaudio.enable = false;
+  sound.enable = false; # conflicts with PipeWire
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-};
+
+    # jack.enable = true # for JACK applications
+
+  }; 
 }
