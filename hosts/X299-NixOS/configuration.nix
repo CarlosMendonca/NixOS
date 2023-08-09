@@ -17,7 +17,13 @@
     ];
 
     boot.loader = {
-        systemd-boot.enable = true;
+        systemd-boot {
+            enable = true;
+            # Motherboard-specific workaround. BIOS not always renders on high-resolution and this instructs
+            #   systemd-boot to always render on max resoltion instead of following the BIOS current text mode.
+            #   Doc: https://search.nixos.org/options?channel=23.05&show=boot.loader.systemd-boot.consoleMode&from=0&size=50&sort=relevance&type=packages&query=systemd-boot
+            consoleMode = "max";
+        };
         efi.canTouchEfiVariables = true;
     };
 

@@ -10,10 +10,14 @@
     layout = "us";
   };
 
+  # Is this necessary? It's declared already within the scope of the user.
   users.users.gdm = {
     extraGroups = [ "video" ];
   };
-    
+
+  # Enable Ozone support for Electron apps. Doc: https://nixos.wiki/wiki/Visual_Studio_Code
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  
   # environment.gnome.excludePackages = [
     # pkgs.gnome-photos
     # pkgs.gnome-tour
