@@ -10,4 +10,8 @@
     
     home.stateVersion = "25.05";
   };
+
+  users.users.carlos = {
+    extraGroups = [ "networkmanager" ];
+  };
 }

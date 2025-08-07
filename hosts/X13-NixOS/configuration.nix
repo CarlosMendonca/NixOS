@@ -3,7 +3,7 @@
         ./hardware-configuration.nix
         ../../modules
         ../../modules/networking.nix
-        ../../modules/wifi.nix
+        # ../../modules/wifi.nix
 
         ./configuration.gui.gnome.nix
 

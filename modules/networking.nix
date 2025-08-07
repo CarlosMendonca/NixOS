@@ -1,7 +1,8 @@
 # Defines common networking configuration
 {
     networking = {
-        useNetworkd = true;
+        # useNetworkd = true;
+        networkmanager.enable = true;
         useDHCP = false;
     };
 }

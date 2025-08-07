@@ -12,6 +12,7 @@
           "kvm-amd"
           "zenpower"
           "amd_pstate=active"
+          "wl"
         ];
         # kernelPackages = pkgs.linuxPackages_latest;
         kernelParams = [
@@ -30,6 +31,8 @@
         amdgpu.initrd.enable = true;
 
         cpu.amd.updateMicrocode = true;
+
+        enableAllFirmware = true;
 
         graphics = {
             enable = true;
