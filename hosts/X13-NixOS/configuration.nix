@@ -2,6 +2,7 @@
     imports = [
         ./hardware-configuration.nix
         ../../modules
+        ../../modules/programs
         ../../modules/networking.nix
         # ../../modules/wifi.nix
 
