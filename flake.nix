@@ -3,9 +3,9 @@
 
   inputs = {
     
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -17,6 +17,17 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/X299-NixOS/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # doc: https://nix-community.github.io/home-manager/nixos-options.html#nixos-opt-home-manager.useGlobalPkgs
+            home-manager.useUserPackages = true;
+          }
+        ];
+      };
+
+      X13-NixOS = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/X13-NixOS/configuration.nix
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true; # doc: https://nix-community.github.io/home-manager/nixos-options.html#nixos-opt-home-manager.useGlobalPkgs
             home-manager.useUserPackages = true;

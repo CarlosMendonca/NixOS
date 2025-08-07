@@ -3,6 +3,10 @@
         ./hardware-configuration.nix
         ../../modules
         ../../modules/networking.nix
+
+        ./configuration.gui.gnome.nix
+
+        ./users/carlos.gui.gnome.nix
     ];
 
     networking.hostName = "X13-NixOS";

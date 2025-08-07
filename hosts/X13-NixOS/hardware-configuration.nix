@@ -8,34 +8,39 @@
             availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
             kernelModules = [ ];
         };
-        kernelModules = [ "kvm-amd" "zenpower" "amd_pstate=active" ];
+        kernelModules = [
+          "kvm-amd"
+          "zenpower"
+          "amd_pstate=active"
+        ];
+        # kernelPackages = pkgs.linuxPackages_latest;
         kernelParams = [
           "mem_sleep_default=deep"
-          "pcie_aspm.policy=powersupersave",
-          
+          "pcie_aspm.policy=powersupersave"          
         ];
         extraModulePackages = [ config.boot.kernelPackages.zenpower ];
          
         loader = {
             systemd-boot.enable = true;
             efi.canTouchEfiVariables = true;
-    }};
+        };
+    };
 
     hardware = {
         amdgpu.initrd.enable = true;
 
         cpu.amd.updateMicrocode = true;
 
+        graphics = {
+            enable = true;
+            enable32Bit = true;
+        };
+
         nvidia = {
             dynamicBoost.enable = true;
 
-            graphics = {
-                enable = true;
-                enable32Bit = true;
-            };
-
             modesetting.enable = true;
-            nvidiaSetting = true;
+            nvidiaSettings = true;
             open = true;
 
             powerManagement = {
@@ -58,10 +63,10 @@
         sensor.iio.enable = true;
     };
 
-    networking.useDHCP = true;
+    networking.useDHCP = lib.mkDefault true;
     
     nixpkgs = {
-        allowUnfree = true;
+        config.allowUnfree = true;
         hostPlatform = "x86_64-linux";
     };
 
@@ -92,16 +97,17 @@
     # - Mediatek fine tuning 
 
     fileSystems."/" = {
-        device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000";
+        device = "/dev/disk/by-label/nixos";
         fsType = "ext4";
     };
 
     fileSystems."/boot" = {
-        device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000";
+        device = "/dev/disk/by-label/SYSTEM";
         fsType = "vfat";
     };
 
     swapDevices = [
-        { device = "/dev/disk/by-uuid/00000000-0000-0000-0000-000000000000"; }
+        { device = "/dev/disk/by-label/swap"; }
     ];
 }
+
