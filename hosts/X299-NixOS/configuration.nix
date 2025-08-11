@@ -1,40 +1,17 @@
-{ pkgs, ... }: {
+{  }: {
     imports = [
-        ./hardware-configuration.nix
-        ../../modules
-        ../../modules/fonts.nix
-        ../../modules/sound.nix
-        
-        ../../services/openssh.nix
+      ../../users/carlos.nix
 
-        ./configuration.gui.gnome.nix
+      ../../modules/development.nix
+      ../../users/modules/development.nix # TODO determine whether the above should already import this internally
 
-        ./users/carlos.gui.gnome.nix
+      ../../modules/remoting.nix
     ];
-
-    nixpkgs.config.permittedInsecurePackages = [
-      "openssl-1.1.1v"
-    ];
-
-    boot.loader = {
-        systemd-boot = {
-            enable = true;
-            # Motherboard-specific workaround. BIOS not always renders on high-resolution and this instructs
-            #   systemd-boot to always render on max resoltion instead of following the BIOS current text mode.
-            #   Doc: https://search.nixos.org/options?channel=23.05&show=boot.loader.systemd-boot.consoleMode&from=0&size=50&sort=relevance&type=packages&query=systemd-boot
-            # consoleMode = "auto";
-        };
-        efi.canTouchEfiVariables = true;
-    };
-
-    boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.hostName = "X299-NixOS";
     time.timeZone = "America/New_York";
 
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = [ ];
 
-    ];
-
-    system.stateVersion = "23.05";
+    system.stateVersion = "25.05"; # Nix database version; do NOT change; this is not where you update the system
 }

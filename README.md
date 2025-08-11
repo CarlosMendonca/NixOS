@@ -8,7 +8,7 @@ Repo is organized around the hosts that get configured:
 
 * HyperV-NixOS: Hyper-V-based VM
 * X299-NixOS: Intel desktop
-* Z13-NixOS: AMD-based laptop
+* X13-NixOS: AMD-based laptop
 
 ## Usage (HyperV)
 
@@ -55,13 +55,44 @@ $ nixos-install --flake .#HyperV-NixOS
 
 If everything went well, you can `reboot now` to boot from the disk. Going forward, you should be able to remote login via ssh provided that you configured the public key on the `users/<username>.nix` file.
 
+## Getting Started (bare metal)
+
+From the miminal ISO image, configure Wi-Fi:
+```
+$ sudo -i
+$ systemctl start wpa_supplicant
+$ wpa_cli
+```
+
+From `wpa_cli` do:
+```
+> add_network
+> set_network 0 ssid "SSID"
+> set_network 0 psk "password"
+> enable_network 0
+> quit
+```
+
+Partition the disk and leave the Windows boot partition (`SYSTEM`) alone.
+
+Mount partitions.
+
+Install with:
+```
+$ nixos-install --flake .#X13-NixOS
+```
+
+Set the password for user `carlos` with:
+```
+$ nixos-enter --root /mnt -c "passwd carlos"
+$ reboot now
+```
+
 ## TO-DOs
 
-* Test on real hardware (desktop and laptop)
-* Expand to other systems
 * Expand to Darwin
 * Implement statix
-* home-manager
-* Flakes
 * Secrets
 * Disk encryption
+* Hibernation
+* Overlays, to modify packages if necessary

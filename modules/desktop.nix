@@ -1,24 +1,32 @@
-{ pkgs, ... }: {
+{ }: {
+  # TODO consider separating hardware roles from software roles
+
+  imports = [
+    ./. # default.nix
+  ];
+
+  # Fonts -- specific fonts are configured by Home Manager
+  fonts = {
+    fontconfig.enable = true;
+    fontDir.enable = true;
+  };
+
   services.xserver = {
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    
-    # desktopManager.xterm.enable = false;
+
+    # desktopManager.xterm.enable = false; # see line below
     excludePackages = [ pkgs.xterm ];
 
     layout = "us";
   };
 
-  # Is this necessary? It's declared already within the scope of the user.
-  users.users.gdm = {
-    extraGroups = [ "video" ];
-  };
+  users.users.gdm.extraGroups = [ "video" ];
 
-  # Enable Ozone support for Electron apps. Doc: https://nixos.wiki/wiki/Visual_Studio_Code
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  
-  # environment.gnome.excludePackages = [
+  environment.sessionVariables.NIXOS_OZONE_WL = "1"; # enable Ozone support for Electron apps -- see https://nixos.wiki/wiki/Visual_Studio_Code
+
+  environment.gnome.excludePackages = [
     # pkgs.gnome-photos
     # pkgs.gnome-tour
 
@@ -43,11 +51,11 @@
 
     # pkgs.epiphany
     # pkgs.evince
-  # ];
+  ];
 
-  # environment.systemPackages = [
+  environment.systemPackages = [
     # pkgs.gnome.gnome-tweaks
     # pkgs.gnome.gnome-shell-extensions
     # pkgs.gnome.dconf-editor
-  # ];
+  ];
 }

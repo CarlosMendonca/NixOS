@@ -1,53 +1,101 @@
-{ config, lib, pkgs, modulesPath, ... }: {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+{ }: {
+    imports = [ 
+      ../../modules/. # default.nix
+      ../../modules/bluetooth.nix
+      ../../modules/sound.nix
+      ../../modules/wifi.nix
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+    boot = {
+        blacklistedKernelModules = [ "nouveau" ];
+        
+        extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ecdf62af-3ffb-41dd-a65d-3b52c22cd3aa";
-      fsType = "ext4";
+        initrd = {
+            availableKernelModules = [
+              "xhci_pci"
+              "ahci"
+              "nvme"
+              "usbhid"
+              "usb_storage"
+              "sd_mod"
+            ];
+
+            kernelModules = [ ];
+        };
+
+        kernelModules = [
+          "kvm-intel"
+          # "wl" # wireless network; not using Wi-Fi on this host, even though it supports it
+        ];
+        
+        # kernelPackages = pkgs.linuxPackages_latest; # TODO define whether to use this or not
+        
+        kernelParams = [
+          # "mem_sleep_default=deep"
+          # "pcie_aspm.policy=powersupersave"
+        ];
+         
+        loader = {
+            systemd-boot.enable = true;
+            efi.canTouchEfiVariables = true;
+        };
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/6832-331C";
-      fsType = "vfat";
+    hardware = {
+        cpu.intel.updateMicrocode = true;
+
+        enableAllFirmware = true; # required by some hardware
+
+        graphics = {
+            enable = true;
+            enable32Bit = true;
+        };
+
+        nvidia = {
+            # dynamicBoost.enable = true;
+
+            modesetting.enable = true;
+            nvidiaSettings = true;
+            open = true;
+
+            # powerManagement = {
+            #     enable = true;
+            #     finegrained = true;
+            # };
+
+            # package = config.boot.kernelPackages.nvidiaPackages.stable; # TODO determine whether this should be specified
+
+            # prime = { }; # single GPU host
+        };
+    };
+    
+    nixpkgs = {
+        config.allowUnfree = true;
+        hostPlatform = "x86_64-linux";
     };
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/4b74ef0d-3182-40b1-9d06-632c2c0b269c"; }
+    services = {
+      fstrim.enable = true;
+      
+      # xserver.videoDrivers = ["nvidia"]; # TODO check wether this is still necessary to specify
+    };
+
+    # Disable power auto-suspend for the ASUS N-KEY device, i.e. USB Keyboard
+    # Disable power wakeup for the 8295 ITE device
+    # Mediatek fine tuning -- not necessary since I'm running AX210
+
+    fileSystems."/" = {
+        device = "/dev/disk/by-label/nixos";
+        fsType = "ext4";
+    };
+
+    fileSystems."/boot" = {
+        device = "/dev/disk/by-label/SYSTEM"; # assume the Windows boot partition manually created with 512MB
+        fsType = "vfat";
+    };
+
+    swapDevices = [
+        { device = "/dev/disk/by-label/swap"; } # 64GB for this host
     ];
-
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-    hardware.opengl = {
-        enable = true;
-        driSupport = true;
-        driSupport32Bit = true;
-    };
-
-    services.xserver.videoDrivers = ["nvidia"];
-
-    hardware.nvidia = {
-        modesetting.enable = true;
-        open = true;
-        nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-
-    nixpkgs.config.allowUnfree = true;
 }

@@ -1,6 +1,6 @@
-# Defines common WiFi configuration
-{
-    networking = {
-        wireless.enable = true;
-    };
+{ }: {
+  # Networking / WiFi
+  networking = {
+      wireless.enable = true;
+  };
 }

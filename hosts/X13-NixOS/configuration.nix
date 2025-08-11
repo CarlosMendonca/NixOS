@@ -1,23 +1,17 @@
-{ pkgs, ... }: {
+{  }: {
     imports = [
-        ./hardware-configuration.nix
-        ../../modules
-        ../../modules/programs
-        ../../modules/networking.nix
-        # ../../modules/wifi.nix
+      ../../users/carlos.nix
 
-        ./configuration.gui.gnome.nix
+      ../../modules/development.nix
+      ../../users/modules/development.nix # TODO determine whether the above should already import this internally
 
-        ./users/carlos.gui.gnome.nix
+      ../../modules/remoting.nix
     ];
 
     networking.hostName = "X13-NixOS";
     time.timeZone = "America/New_York";
 
-    environment.systemPackages = with pkgs; [
+    environment.systemPackages = [ ];
 
-    ];
-
-    # Do never change -- this is not where you update the system
-    system.stateVersion = "25.05";
+    system.stateVersion = "25.05"; # Nix database version; do NOT change; this is not where you update the system
 }

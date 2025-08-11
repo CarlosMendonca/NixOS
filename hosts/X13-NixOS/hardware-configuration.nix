@@ -1,25 +1,46 @@
-{ config, lib, pkgs, modulesPath, ... }: {
-    imports = [ ];
+{ }: {
+    imports = [ 
+      ../../modules/. # default.nix
+      ../../modules/bluetooth.nix
+      ../../modules/sound.nix
+      ../../modules/wifi.nix
+    ];
 
     boot = {
-        blacklistedKernelModules = [ "k10temp" "nouveau" ];
+        blacklistedKernelModules = [
+            "k10temp" # AMD temperature sensor?
+            "nouveau"
+        ];
+        
+        extraModulePackages = [ config.boot.kernelPackages.zenpower ]; # TODO clarify what this is referring to
 
         initrd = {
-            availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+            availableKernelModules = [
+              "nvme"
+              "xhci_pci"
+              "thunderbolt"
+              "usbhid"
+              "usb_storage"
+              "sd_mod"
+              "sdhci_pci"
+            ];
+
             kernelModules = [ ];
         };
+
         kernelModules = [
           "kvm-amd"
           "zenpower"
           "amd_pstate=active"
-          "wl"
+          "wl" # wireless network
         ];
-        # kernelPackages = pkgs.linuxPackages_latest;
+        
+        # kernelPackages = pkgs.linuxPackages_latest; # TODO define whether to use this or not
+        
         kernelParams = [
           "mem_sleep_default=deep"
           "pcie_aspm.policy=powersupersave"          
         ];
-        extraModulePackages = [ config.boot.kernelPackages.zenpower ];
          
         loader = {
             systemd-boot.enable = true;
@@ -32,7 +53,7 @@
 
         cpu.amd.updateMicrocode = true;
 
-        enableAllFirmware = true;
+        enableAllFirmware = true; # required for AX210, amdgpu, and potentially others
 
         graphics = {
             enable = true;
@@ -62,11 +83,8 @@
             };
         };
 
-        # Enable 2-in-1 sensors (orientation)
-        sensor.iio.enable = true;
+        sensor.iio.enable = true; # enable 2-in-1 sensors (orientation)
     };
-
-    networking.useDHCP = lib.mkDefault true;
     
     nixpkgs = {
         config.allowUnfree = true;
@@ -77,27 +95,27 @@
         asusd = {
             enable = true;
             enableUserService = true;
-        };
+        }; # Asus control software
 
         fstrim.enable = true;
 
-        supergfxd.enable = true;
+        supergfxd.enable = true; # Asus control software
 
-        tlp.enable = false;
+        tlp.enable = false; # TODO clarify what this is
 
         udev = {
             extraHwdb = ''
-                # Fixes mic mute button
                 evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
                 KEYBOARD_KEY_ff31007c=f20
-            '';
+            ''; # fixes mic mute button
         };
+
+        # xserver.videoDrivers = ["nvidia"]; # TODO determine whether it needs to be specified and what value should be used
     };
 
-    # Configuration not applied
-    # - Disable power auto-suspend for the ASUS N-KEY device, i.e. USB Keyboard
-    # - Disable power wakeup for the 8295 ITE device
-    # - Mediatek fine tuning 
+    # Disable power auto-suspend for the ASUS N-KEY device, i.e. USB Keyboard
+    # Disable power wakeup for the 8295 ITE device
+    # Mediatek fine tuning -- not necessary since I'm running AX210
 
     fileSystems."/" = {
         device = "/dev/disk/by-label/nixos";
@@ -105,12 +123,11 @@
     };
 
     fileSystems."/boot" = {
-        device = "/dev/disk/by-label/SYSTEM";
+        device = "/dev/disk/by-label/SYSTEM"; # assume the Windows boot partition manually created with 512MB
         fsType = "vfat";
     };
 
     swapDevices = [
-        { device = "/dev/disk/by-label/swap"; }
+        { device = "/dev/disk/by-label/swap"; } # not sure if 32 or 64GB
     ];
 }
-
