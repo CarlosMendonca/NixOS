@@ -1,5 +1,7 @@
 {  }: {
     imports = [
+      ./hardware-configuration.nix
+
       ../../users/carlos.nix
 
       ../../modules/development.nix

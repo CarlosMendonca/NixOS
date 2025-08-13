@@ -1,4 +1,4 @@
-{ }: {
+{ pkgs, ... }: {
   # TODO consider separating hardware roles from software roles
 
   imports = [
@@ -19,7 +19,7 @@
     # desktopManager.xterm.enable = false; # see line below
     excludePackages = [ pkgs.xterm ];
 
-    layout = "us";
+    xkb.layout = "us";
   };
 
   users.users.gdm.extraGroups = [ "video" ];
@@ -54,7 +54,7 @@
   ];
 
   environment.systemPackages = [
-    # pkgs.gnome.gnome-tweaks
+    # pkgs.gnome.gnome-tweaks # a few Gnome extras
     # pkgs.gnome.gnome-shell-extensions
     # pkgs.gnome.dconf-editor
   ];

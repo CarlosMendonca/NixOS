@@ -1,9 +1,7 @@
-{ }: {
+{ config, ... }: {
     imports = [ 
-      ../../modules/. # default.nix
-      ../../modules/bluetooth.nix
-      ../../modules/sound.nix
-      ../../modules/wifi.nix
+      # ../../modules/bluetooth.nix # Bluetooth seems to work without needing to enable this
+      # ../../modules/sound.nix # sound seems to work without needing to enable this
     ];
 
     boot = {
@@ -88,7 +86,6 @@
     
     nixpkgs = {
         config.allowUnfree = true;
-        hostPlatform = "x86_64-linux";
     };
 
     services = {

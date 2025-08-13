@@ -1,7 +1,6 @@
-{ }: {
+{ ... }: {
   # Sound -- see https://nixos.wiki/wiki/ALSA, https://nixos.wiki/wiki/PulseAudio, https://nixos.wiki/wiki/PipeWire
   hardware.pulseaudio.enable = false;
-  sound.enable = false; # conflicts with PipeWire
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

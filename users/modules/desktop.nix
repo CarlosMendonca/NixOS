@@ -1,4 +1,4 @@
-{ }: {
+{ pkgs, ... }: {
   imports = [
     ./. # default.nix
   ];
@@ -13,6 +13,4 @@
     pkgs.nerd-fonts.iosevka
     pkgs.nerd-fonts.iosevka-term
   ];
-
-  home.xsession.enable = true;
 }

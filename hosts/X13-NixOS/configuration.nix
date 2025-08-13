@@ -1,17 +1,45 @@
-{  }: {
-    imports = [
-      ../../users/carlos.nix
+{ lib, pkgs, home-manager, ... }:
+let
+  carlosUserSettings = import ../../users/carlos.nix { inherit pkgs; };
+  stateVersion = "25.05";
+in
+{
+  imports = [
+    #Hardware configuration
+    ./hardware-configuration.nix
 
-      ../../modules/development.nix
-      ../../users/modules/development.nix # TODO determine whether the above should already import this internally
+    # System roles and functions
+    ../../modules/development.nix
+  ];
 
-      ../../modules/remoting.nix
+  # System-specific settings
+  networking.hostName = "X13-NixOS";
+  time.timeZone = "America/New_York";
+  system.stateVersion = stateVersion;
+
+  # System-wide packages specific to this system
+  environment.systemPackages = [ ];
+
+  # User system settings
+  users.users.carlos = carlosUserSettings.system;
+  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
+
+  # Home-Manager settings
+  home-manager = {
+
+    # User home settings
+    users.carlos = lib.mkMerge [
+      carlosUserSettings.home
+      {
+        imports = [
+          ../../users/modules/development.nix
+        ];
+
+        home.stateVersion = stateVersion; # done this way to extract Home-Manager's stateVersion to the system level and make sure it matches system.stateVersion
+      }
     ];
-
-    networking.hostName = "X13-NixOS";
-    time.timeZone = "America/New_York";
-
-    environment.systemPackages = [ ];
-
-    system.stateVersion = "25.05"; # Nix database version; do NOT change; this is not where you update the system
+    
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 }
