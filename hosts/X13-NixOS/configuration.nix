@@ -10,6 +10,7 @@ in
 
     # System roles and functions
     ../../modules/development.nix
+    ../../modules/remoting.nix
   ];
 
   # System-specific settings

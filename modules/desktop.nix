@@ -19,7 +19,20 @@
     # desktopManager.xterm.enable = false; # see line below
     excludePackages = [ pkgs.xterm ];
 
-    xkb.layout = "us";
+    xkb = {
+      layout = "us,us";
+      variant = "intl,"; # will assume every keyboard is US International
+      options = "grp:alt_shift_toggle";
+    };
+  };
+
+  console.useXkbConfig = true;
+  i18n = {
+    defaultLocale = "en_US.UTF-8"; # already the default, just making explicit
+    defaultCharset = "UTF-8"; # already the default, just making explicit
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "pt_BR.UTF-8/UTF-8" ];
+    extraLocaleSettings = { LC_CTYPE = "pt_BR.UTF-8"; }; # will assume every leyboard is US International; this fixes ' + c for cedilla
+
   };
 
   users.users.gdm.extraGroups = [ "video" ];

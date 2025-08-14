@@ -19,6 +19,8 @@
       userEmail = "CarlosMendonca@users.noreply.github.com";
     };
 
+    home.language.base = "en_US.UTF-8";
+
     home.packages = [];
   };
 }
