@@ -3,7 +3,7 @@
     ./. # default.nix
   ];
   programs = {
-    # chromium.enable = true; # using Chrome instead
+    # chromium.enable = true; # using Google Chrome instead
     firefox.enable = true;
     vscode.enable = true;
   };
@@ -12,5 +12,8 @@
     # Fonts
     pkgs.nerd-fonts.iosevka
     pkgs.nerd-fonts.iosevka-term
+    
+    pkgs.google-chrome
+    pkgs.spotify-player
   ];
 }

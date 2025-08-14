@@ -7,5 +7,6 @@
   home.packages = [
     pkgs.devenv
     pkgs.github-desktop
+    pkgs.lazygit
   ];
 }

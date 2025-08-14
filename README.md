@@ -96,3 +96,6 @@ $ reboot now
 * Disk encryption
 * Hibernation
 * Overlays, to modify packages if necessary
+* GDM and Gnome wallpapers
+* Terminal and vscode themes
+* nixfmt
