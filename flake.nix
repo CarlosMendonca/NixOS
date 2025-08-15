@@ -3,21 +3,33 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   
-  outputs = { self, nixpkgs, home-manager, ... }: {
-    nixosConfigurations = {
-      X13-NixOS = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/X13-NixOS/configuration.nix
-          home-manager.nixosModules.home-manager
-        ];
-      };
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... } @inputs:
+    let
+      X13-NixOS-host = import ./hosts/X13-NixOS;
+    in {
+      nixosConfigurations = {
+        X13-NixOS = nixpkgs.lib.nixosSystem {
+          system = X13-NixOS-host.system;
+          specialArgs = {
+            pkgs-unstable = import nixpkgs-unstable {
+              system = X13-NixOS-host.system;
+              config.allowUnfree = X13-NixOS-host.allowUnfree;
+            };
+          };
+          modules = [
+            X13-NixOS-host.module
+            ({ ... }: { nixpkgs.config.allowUnfree = X13-NixOS-host.allowUnfree; }) # extracting the allowUnfree setting to the flake level
+            home-manager.nixosModules.home-manager
+          ];
+        };
     };
   };
 }

@@ -1,7 +1,6 @@
-{ ... }:
-
+{ config, pkgs, ... }:
 {
-  system = {
+  users.users.carlos = {
     isNormalUser = true;
     extraGroups = [
         "wheel"
@@ -11,9 +10,11 @@
     initialPassword = "pass@word1";
 
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHuPS+6cOVy3XmxL/xmec0xSj1JKUmvFeT3OAb0XIH1c" ];
+
+    # environment.systemPackages = []; # packages that are exclusive to this user
   };
 
-  home = {
+  home-manager.users.carlos = {
     programs.git = {
       userName = "Carlos Mendonça";
       userEmail = "CarlosMendonca@users.noreply.github.com";
@@ -21,6 +22,6 @@
 
     home.language.base = "en_US.UTF-8";
 
-    home.packages = [];
+    # home.packages = []; # packages that are exclusive to this user
   };
 }

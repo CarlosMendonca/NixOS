@@ -1,7 +1,7 @@
 { config, ... }: {
     imports = [ 
-      # ../../modules/bluetooth.nix # Bluetooth seems to work without needing to enable this
-      # ../../modules/sound.nix # sound seems to work without needing to enable this
+      # ../../modules/bluetooth.nix # Bluetooth seems to work without needing to include this -- may be enabled elsewhere
+      # ../../modules/sound.nix # sounds like sound works without needing to enable this
     ];
 
     boot = {
@@ -83,10 +83,6 @@
         };
 
         sensor.iio.enable = true; # enable 2-in-1 sensors (orientation)
-    };
-    
-    nixpkgs = {
-        config.allowUnfree = true;
     };
 
     services = {

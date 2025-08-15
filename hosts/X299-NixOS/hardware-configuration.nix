@@ -69,11 +69,6 @@
             # prime = { }; # single GPU host
         };
     };
-    
-    nixpkgs = {
-        config.allowUnfree = true;
-        hostPlatform = "x86_64-linux";
-    };
 
     services = {
       fstrim.enable = true;

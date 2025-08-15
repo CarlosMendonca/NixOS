@@ -1,6 +1,5 @@
-{ lib, pkgs, home-manager, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 let
-  carlosUserSettings = import ../../users/carlos.nix { inherit pkgs; };
   stateVersion = "25.05";
 in
 {
@@ -11,7 +10,12 @@ in
     # System roles and functions
     ../../modules/development.nix
     ../../modules/remoting.nix
+
+    # Users
+    ../../users/carlos.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   # System-specific settings
   networking.hostName = "X13-NixOS";
@@ -22,23 +26,20 @@ in
   environment.systemPackages = [ ];
 
   # User system settings
-  users.users.carlos = carlosUserSettings.system;
   nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
 
   # Home-Manager settings
   home-manager = {
+    extraSpecialArgs = { inherit pkgs-unstable; };
 
     # User home settings
-    users.carlos = lib.mkMerge [
-      carlosUserSettings.home
-      {
+    users.carlos = {
         imports = [
           ../../users/modules/development.nix
         ];
 
         home.stateVersion = stateVersion; # done this way to extract Home-Manager's stateVersion to the system level and make sure it matches system.stateVersion
-      }
-    ];
+      };
     
     useGlobalPkgs = true;
     useUserPackages = true;

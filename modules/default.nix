@@ -2,8 +2,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" ];
 
-  nixpkgs.config.allowUnfree = true;
-
   # Networking -- common to all configurations
   networking = {
     # useNetworkd = true; # conflicts with Network Manager 
