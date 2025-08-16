@@ -12,7 +12,7 @@ in
     ../../modules/remoting.nix
 
     # Users
-    ../../users/carlos.nix
+    ../../users/carlos.nix # TODO consider going back to having system and home as variables
   ];
 
   nixpkgs.config.allowUnfree = true;

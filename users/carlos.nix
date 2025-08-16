@@ -15,6 +15,19 @@
   };
 
   home-manager.users.carlos = {
+    dconf.settings = {
+      "org/gnome/desktop/background" = {
+        picture-uri = "file://${../assets/Rancho_day_1600.png}";
+        picture-uri-dark = "file://${../assets/Rancho_night_1600.png}";
+      };
+
+      "org/gnome/desktop/screensaver" = {
+        picture-uri = "file://${../assets/Rancho_day_1600.png}";
+      };
+    };
+    
+    home.file."Pictures/carlos.jpg".source = ../assets/carlos.jpg; # TODO change to a configuration once it gets implemented; see https://github.com/NixOS/nixpkgs/issues/163080
+    
     programs.git = {
       userName = "Carlos Mendonça";
       userEmail = "CarlosMendonca@users.noreply.github.com";
