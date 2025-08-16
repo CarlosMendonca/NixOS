@@ -1,58 +1,70 @@
-{ config, ... }:
+{ config, lib, ... }:
+let
+  kernelVersion = config.boot.kernelPackages.kernel.version;
+in
 {
   imports = [
     # ../../modules/bluetooth.nix # Bluetooth seems to work without needing to include this -- may be enabled elsewhere
     # ../../modules/sound.nix # sounds like sound works without needing to enable this
   ];
 
-  boot = {
-    blacklistedKernelModules = [
-      "k10temp" # AMD temperature sensor?
-      "nouveau"
-    ];
-
-    extraModulePackages = [ config.boot.kernelPackages.zenpower ]; # TODO clarify what this is referring to
-
-    initrd = {
-      availableKernelModules = [
-        "nvme"
-        "xhci_pci"
-        "thunderbolt"
-        "usbhid"
-        "usb_storage"
-        "sd_mod"
-        "sdhci_pci"
+  boot = lib.mkMerge [
+    {
+      blacklistedKernelModules = [
+        "k10temp" # AMD temperature sensor?
+        "nouveau"
       ];
 
-      kernelModules = [ ];
-    };
+      extraModulePackages = [ config.boot.kernelPackages.zenpower ]; # TODO clarify what this is referring to
 
-    kernelModules = [
-      "kvm-amd"
-      "zenpower"
-      "amd_pstate"
-      "wl" # wireless network
-    ];
+      initrd = {
+        availableKernelModules = [
+          "nvme"
+          "xhci_pci"
+          "thunderbolt"
+          "usbhid"
+          "usb_storage"
+          "sd_mod"
+          "sdhci_pci"
+        ];
 
-    # kernelPackages = pkgs.linuxPackages_latest; # TODO define whether to use this or not
+        kernelModules = [ ];
+      };
 
-    kernelParams = [
-      "mem_sleep_default=deep"
-      "pcie_aspm.policy=powersupersave"
-      "amdgpu.sg_display=0" # can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
-      "amdgpu.dcdebugmask=0x10" # same as above
+      kernelModules = [
+        "kvm-amd"
+        "zenpower"
+        "wl" # wireless network
+      ];
 
-      "initcall_blacklist=acpi_cpufreq_init"
-      "amd_pstate=passive"
-      "amd_pstate=active"
-    ];
+      # kernelPackages = pkgs.linuxPackages_latest; # TODO define whether to use this or not
 
-    loader = {
-      systemd-boot.enable = true;
-      systemd-boot.configurationLimit = 5;
-      efi.canTouchEfiVariables = true;
-    };
-  };
+      kernelParams = [
+        "mem_sleep_default=deep"
+        "pcie_aspm.policy=powersupersave"
+        "amdgpu.sg_display=0" # can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
+        "amdgpu.dcdebugmask=0x10" # same as above
+      ];
+
+      loader = {
+        systemd-boot.enable = true;
+        systemd-boot.configurationLimit = 5;
+        efi.canTouchEfiVariables = true;
+      };
+    }
+
+    # AMD P-State optimiizations from https://github.com/NixOS/nixos-hardware/blob/master/common/cpu/amd/pstate.nix; see https://www.kernel.org/doc/html/latest/admin-guide/pm/amd-pstate.html
+    (lib.mkIf ((lib.versionAtLeast kernelVersion "5.17") && (lib.versionOlder kernelVersion "6.1")) {
+      kernelParams = [ "initcall_blacklist=acpi_cpufreq_init" ];
+      kernelModules = [ "amd-pstate" ];
+    })
+    (lib.mkIf ((lib.versionAtLeast kernelVersion "6.1") && (lib.versionOlder kernelVersion "6.3")) {
+      kernelParams = [ "amd_pstate=passive" ];
+    })
+    (lib.mkIf (lib.versionAtLeast kernelVersion "6.3") {
+      kernelParams = [ "amd_pstate=active" ];
+    })
+  ];
 
   hardware = {
     amdgpu.initrd.enable = true;
