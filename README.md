@@ -96,6 +96,12 @@ $ reboot now
 * Disk encryption
 * Hibernation
 * Overlays, to modify packages if necessary
-* GDM and Gnome wallpapers
 * Terminal and vscode themes
 * nixfmt
+
+### DONE
+* Gnome keybindings for `show-screenshot-ui=['<Shift><Super>s']`, see https://discourse.nixos.org/t/nixos-options-to-configure-gnome-keyboard-shortcuts/7275
+* Gnome fractional scaling, see https://discourse.nixos.org/t/how-to-set-fractional-scaling-via-nix-configuration-for-gnome-wayland/56774
+* GDM and Gnome wallpapers 
+* Flakes
+* home-manager

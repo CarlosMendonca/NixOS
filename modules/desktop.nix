@@ -16,6 +16,14 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
+    desktopManager.gnome.extraGSettingsOverrides = ''
+      [org.gnome.mutter]
+      experimental-features=['scale-monitor-framebuffer', 'xwayland-native-scaling']
+
+      [org.gnome.shell.keybindings]
+      show-screenshot-ui=['<Shift><Super>s']
+    ''; # TODO consider moving the screenshot keybinding to the host config level, since this is keyboard-specific
+
     # desktopManager.xterm.enable = false; # see line below
     excludePackages = [ pkgs.xterm ];
 
