@@ -8,6 +8,7 @@
     pkgs.devenv
     pkgs.github-desktop
     pkgs.lazygit
+    # pkgs.starship # better to configure this per-project?
     
     pkgs-unstable.code-cursor
   ];

@@ -14,6 +14,9 @@
     pkgs.nerd-fonts.iosevka-term
     
     pkgs.google-chrome
+    pkgs.localsend
+    # pkgs.pinta # simple photo editor
+    pkgs.rustdesk-flutter
     pkgs.spotify-player
   ];
 }
