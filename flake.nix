@@ -14,6 +14,7 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... } @inputs:
     let
       X13-NixOS-host = import ./hosts/X13-NixOS;
+      X299-NixOS-host = import ./hosts/X299-NixOS;
     in {
       nixosConfigurations = {
         X13-NixOS = nixpkgs.lib.nixosSystem {
@@ -27,6 +28,21 @@
           modules = [
             X13-NixOS-host.module
             ({ ... }: { nixpkgs.config.allowUnfree = X13-NixOS-host.allowUnfree; }) # extracting the allowUnfree setting to the flake level
+            home-manager.nixosModules.home-manager
+          ];
+        };
+
+        X299-NixOS = nixpkgs.lib.nixosSystem {
+          system = X299-NixOS-host.system;
+          specialArgs = {
+            pkgs-unstable = import nixpkgs-unstable {
+              system = X299-NixOS-host.system;
+              config.allowUnfree = X299-NixOS-host.allowUnfree;
+            };
+          };
+          modules = [
+            X299-NixOS-host.module
+            ({ ... }: { nixpkgs.config.allowUnfree = X299-NixOS-host.allowUnfree; }) # extracting the allowUnfree setting to the flake level
             home-manager.nixosModules.home-manager
           ];
         };
