@@ -1,19 +1,49 @@
-{  }: {
-    imports = [
-      ./hardware-configuration.nix
+{ config, lib, pkgs, pkgs-unstable, ... }:
+let
+  stateVersion = "25.05";
+in
+{
+  imports = [
+    #Hardware configuration
+    ./hardware-configuration.nix
 
-      ../../users/carlos.nix
+    # System roles and functions
+    ../../modules/development.nix
+    ../../modules/remoting.nix
 
-      ../../modules/development.nix
-      ../../users/modules/development.nix # TODO determine whether the above should already import this internally
+    # Users
+    ../../users/carlos.nix # TODO consider going back to having system and home as variables
+  ];
 
-      ../../modules/remoting.nix
-    ];
+  # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
 
-    networking.hostName = "X299-NixOS";
-    time.timeZone = "America/New_York";
+  nixpkgs.config.allowUnfree = true;
 
-    environment.systemPackages = [ ];
+  # System-specific settings
+  networking.hostName = "X299-NixOS";
+  time.timeZone = "America/New_York";
+  system.stateVersion = stateVersion;
 
-    system.stateVersion = "25.05"; # Nix database version; do NOT change; this is not where you update the system
+  # System-wide packages specific to this system
+  environment.systemPackages = [ ];
+
+  # User system settings
+  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
+
+  # Home-Manager settings
+  home-manager = {
+    extraSpecialArgs = { inherit pkgs-unstable; };
+
+    # User home settings
+    users.carlos = {
+        imports = [
+          ../../users/modules/development.nix
+        ];
+
+        home.stateVersion = stateVersion; # done this way to extract Home-Manager's stateVersion to the system level and make sure it matches system.stateVersion
+      };
+    
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
 }
