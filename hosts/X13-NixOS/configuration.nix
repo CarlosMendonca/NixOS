@@ -15,6 +15,8 @@ in
     ../../users/carlos.nix # TODO consider going back to having system and home as variables
   ];
 
+  # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
+
   nixpkgs.config.allowUnfree = true;
 
   # System-specific settings

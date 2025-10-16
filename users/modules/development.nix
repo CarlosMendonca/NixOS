@@ -8,7 +8,7 @@
     pkgs.devenv
     pkgs.github-desktop
     pkgs.lazygit
-    # pkgs.starship # better to configure this per-project?
+    # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
     
     pkgs-unstable.code-cursor
   ];

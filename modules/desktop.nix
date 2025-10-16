@@ -40,7 +40,6 @@
     defaultCharset = "UTF-8"; # already the default, just making explicit
     supportedLocales = [ "en_US.UTF-8/UTF-8" "pt_BR.UTF-8/UTF-8" ];
     extraLocaleSettings = { LC_CTYPE = "pt_BR.UTF-8"; }; # will assume every leyboard is US International; this fixes ' + c for cedilla
-
   };
 
   users.users.gdm.extraGroups = [ "video" ];
@@ -75,8 +74,11 @@
   ];
 
   environment.systemPackages = [
-    # pkgs.gnome.gnome-tweaks # a few Gnome extras
-    # pkgs.gnome.gnome-shell-extensions
-    # pkgs.gnome.dconf-editor
+    pkgs.gnome-tweaks # a few Gnome extras
+    # pkgs.dconf-editor
+
+    pkgs.easyeffects # GTk4 PipeWire audio mixer
   ];
+
+  programs.localsend.enable = true;
 }
