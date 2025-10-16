@@ -54,6 +54,30 @@ in
       enable = true;
       enable32Bit = true;
     };
+
+    # Enabling the RTX 2080 Ti GPU
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "570.195.03";
+        
+        sha256_64bit = "sha256-1H3oHZpRNJamCtyc+nL+nhYsZfJyL7lgxPUxvXrF3B4=";
+        sha256_aarch64 = lib.fakeHash;
+        openSha256 = "sha256-vCBB/UJgVKHlSEWdgoF45lODr3YJmR6JwjrwWgWszBw=";
+        settingsSha256 = "sha256-mjKkMEPV6W69PO8jKAKxAS861B82CtCpwVTeNr5CqUY=";
+        persistencedSha256 = "sha256-1H3oHZpRNJamCtyc+nL+nhYsZfJyL7lgxPUxvXrF3B4=";
+      };
+
+      dynamicBoost.enable = true;
+
+      modesetting.enable = true;
+      nvidiaSettings = true;
+      open = true;
+
+      powerManagement = {
+        enable = true;
+        # finegrained = true; # finegrained power management requires offload to be enabled, which is not necessary in this host
+      };
+    };
   };
 
   services = {
@@ -61,7 +85,7 @@ in
 
     tlp.enable = false; # avoid conflicts with Gnome 40+; see https://github.com/NixOS/nixos-hardware/issues/260
 
-    xserver.videoDrivers = [ "modesetting" ]; # TODO determine whether it needs to be specified and what value should be used
+    xserver.videoDrivers = [ "nvidia" ];
   };
 
   fileSystems."/" = {
@@ -77,32 +101,4 @@ in
   swapDevices = [
     { device = "/dev/disk/by-label/swap"; } # 64GB
   ];
-
-  # Specialisation for enabling the RTX 2080 Ti GPU
-  specialisation.nvidia.configuration = {
-    hardware.nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.76.05";
-        
-        sha256_64bit = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
-        sha256_aarch64 = lib.fakeHash;
-        openSha256 = "sha256-xEPJ9nskN1kISnSbfBigVaO6Mw03wyHebqQOQmUg/eQ=";
-        settingsSha256 = "sha256-ll7HD7dVPHKUyp5+zvLeNqAb6hCpxfwuSyi+SAXapoQ=";
-        persistencedSha256 = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
-      };
-
-      dynamicBoost.enable = true;
-
-      modesetting.enable = true;
-      nvidiaSettings = true;
-      open = true;
-
-      powerManagement = {
-        enable = true;
-        # finegrained = true; # finegrained power management requires offload to be enabled, which is not necessary in this host
-      };
-    };
-
-    services.xserver.videoDrivers = [ "nvidia" ]; # adds to the list of video drivers
-  };
 }
