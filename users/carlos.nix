@@ -17,12 +17,12 @@
   home-manager.users.carlos = {
     dconf.settings = {
       "org/gnome/desktop/background" = {
-        picture-uri = "file://${../assets/Rancho_day_1600.png}";
-        picture-uri-dark = "file://${../assets/Rancho_night_1600.png}";
+        picture-uri = "file://${../assets/Rancho_day_2160.png}";
+        picture-uri-dark = "file://${../assets/Rancho_night_2160.png}";
       };
 
       "org/gnome/desktop/screensaver" = {
-        picture-uri = "file://${../assets/Rancho_day_1600.png}";
+        picture-uri = "file://${../assets/Rancho_day_2160.png}";
       };
     };
     
