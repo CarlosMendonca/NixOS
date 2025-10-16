@@ -99,7 +99,7 @@ in
 
       powerManagement = {
         enable = true;
-        finegrained = true;
+        # finegrained = true; # finegrained power management requires offload to be enabled, which is not necessary in this host
       };
     };
 
