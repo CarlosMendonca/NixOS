@@ -29,7 +29,7 @@ in
 
       kernelModules = [
         "kvm-intel"
-        # "wl" # wireless network -- not really needed for this host
+        "wl" # wireless network -- not sure if really needed for this host
       ];
 
       kernelPackages = pkgs.linuxPackages_6_16; # alternative to linuxPackages_latest
