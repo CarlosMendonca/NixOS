@@ -31,7 +31,10 @@ in
 
   # Home-Manager settings
   home-manager = {
-    extraSpecialArgs = { inherit pkgs-unstable; };
+    extraSpecialArgs = {
+      inherit pkgs-unstable;
+      systemConfig = config;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
   };

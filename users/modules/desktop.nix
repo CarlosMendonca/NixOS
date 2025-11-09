@@ -1,5 +1,5 @@
-{ config, lib, pkgs, ... }: {
-  config = lib.mkIf config.roles.desktop.enable {
+{ systemConfig, lib, pkgs, ... }: {
+  config = lib.mkIf systemConfig.roles.desktop.enable {
     programs = {
       # chromium.enable = true; # using Google Chrome instead
       firefox.enable = true;
@@ -13,7 +13,7 @@
 
       pkgs.google-chrome
       # pkgs.pinta # simple photo editor
-      pkgs.rustdesk-flutter # consider moving this to system-wide, since it's also a remoting servers
+      pkgs.rustdesk-flutter # consider moving this to system-wide, since it's also a remoting server
       pkgs.spotify-player
     ];
   };

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   options.users.carlos = {
-    enable = lib.mkEnableOption "carlos user configuration";
+    enable = lib.mkEnableOption "Carlos' user configuration";
   };
 
   config = lib.mkIf config.users.carlos.enable {
@@ -20,6 +20,10 @@
     };
 
     home-manager.users.carlos = {
+      imports = [
+        ./modules
+      ];
+
       # Match home-manager stateVersion to system stateVersion
       home.stateVersion = config.system.stateVersion;
       dconf.settings = {

@@ -1,5 +1,5 @@
-{ config, lib, pkgs, pkgs-unstable, ... }: {
-  config = lib.mkIf config.roles.development.enable {
+{ systemConfig, lib, pkgs, pkgs-unstable, ... }: {
+  config = lib.mkIf systemConfig.roles.development.enable {
     home.packages = [
       pkgs.devenv
       pkgs.github-desktop
