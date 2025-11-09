@@ -1,10 +1,18 @@
 { lib, pkgs, ... }: {
+  imports = [
+    ./bluetooth.nix
+    ./desktop.nix
+    ./development.nix
+    ./remoting.nix
+    ./sound.nix
+  ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" ];
 
   # Networking -- common to all configurations
   networking = {
-    # useNetworkd = true; # conflicts with Network Manager 
+    # useNetworkd = true; # conflicts with Network Manager
     networkmanager.enable = true;
     useDHCP = lib.mkForce true; # can also define this per-interface
   };

@@ -4,16 +4,18 @@ let
 in
 {
   imports = [
-    #Hardware configuration
     ./hardware-configuration.nix
-
-    # System roles and functions
-    ../../modules/development.nix
-    ../../modules/remoting.nix
-
-    # Users
-    ../../users/carlos.nix # TODO consider going back to having system and home as variables
+    ../../modules # system roles and functions
+    ../../users
   ];
+
+  # Enable roles
+  roles.development.enable = true;
+  roles.remoting.enable = true;
+
+  # Enable users
+  users.carlos.enable = true;
+  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
 
   # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
 
@@ -27,22 +29,9 @@ in
   # System-wide packages specific to this system
   environment.systemPackages = [ ];
 
-  # User system settings
-  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
-
   # Home-Manager settings
   home-manager = {
     extraSpecialArgs = { inherit pkgs-unstable; };
-
-    # User home settings
-    users.carlos = {
-        imports = [
-          ../../users/modules/development.nix
-        ];
-
-        home.stateVersion = stateVersion; # done this way to extract Home-Manager's stateVersion to the system level and make sure it matches system.stateVersion
-      };
-    
     useGlobalPkgs = true;
     useUserPackages = true;
   };
