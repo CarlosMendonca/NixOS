@@ -37,7 +37,7 @@ in
         "wl" # wireless network
       ];
 
-      kernelPackages = pkgs.linuxPackages_6_16; # alternative to linuxPackages_latest
+      kernelPackages = pkgs.linuxPackages_6_17; # alternative to linuxPackages_latest
 
       kernelParams = [
         "mem_sleep_default=deep"
@@ -126,13 +126,13 @@ in
   specialisation.nvidia.configuration = {
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.76.05";
+        version = "580.105.08";
         
-        sha256_64bit = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
+        sha256_64bit = "sha256-2cboGIZy8+t03QTPpp3VhHn6HQFiyMKMjRdiV2MpNHU=";
         sha256_aarch64 = lib.fakeHash;
-        openSha256 = "sha256-xEPJ9nskN1kISnSbfBigVaO6Mw03wyHebqQOQmUg/eQ=";
-        settingsSha256 = "sha256-ll7HD7dVPHKUyp5+zvLeNqAb6hCpxfwuSyi+SAXapoQ=";
-        persistencedSha256 = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
+        openSha256 = "sha256-FGmMt3ShQrw4q6wsk8DSvm96ie5yELoDFYinSlGZcwQ=";
+        settingsSha256 = "sha256-YvzWO1U3am4Nt5cQ+b5IJ23yeWx5ud1HCu1U0KoojLY=";
+        persistencedSha256 = "sha256-FGmMt3ShQrw4q6wsk8DSvm96ie5yELoDFYinSlGZcwQ=";
       };
 
       dynamicBoost.enable = true;
