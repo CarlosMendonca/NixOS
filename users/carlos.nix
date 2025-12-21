@@ -39,9 +39,9 @@
 
       home.file."Pictures/carlos.jpg".source = ../assets/carlos.jpg; # TODO change to a configuration once it gets implemented; see https://github.com/NixOS/nixpkgs/issues/163080
 
-      programs.git = {
-        userName = "Carlos Mendonça";
-        userEmail = "CarlosMendonca@users.noreply.github.com";
+      programs.git.settings.user = {
+        name = "Carlos Mendonça";
+        email = "CarlosMendonca@users.noreply.github.com";
       };
 
       home.language.base = "en_US.UTF-8";

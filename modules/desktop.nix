@@ -12,8 +12,7 @@
       fontDir.enable = true;
     };
 
-    services.xserver = {
-      enable = true;
+    services = {
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
 
@@ -26,9 +25,9 @@
       ''; # TODO consider moving the screenshot keybinding to the host config level, since this is keyboard-specific
 
       # desktopManager.xterm.enable = false; # see line below
-      excludePackages = [ pkgs.xterm ];
+      xserver.excludePackages = [ pkgs.xterm ]; # no longer necessary since we're no longer enabling xserver?
 
-      xkb = {
+      xserver.xkb = {
         layout = "us,us";
         variant = "intl,"; # will assume every keyboard is US International
         options = "grp:alt_shift_toggle";
