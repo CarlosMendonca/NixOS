@@ -7,8 +7,9 @@
       # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
       pkgs.tree
 
-      pkgs-unstable.code-cursor
+      pkgs-unstable.antigravity
       pkgs-unstable.claude-code
+      pkgs-unstable.code-cursor
     ];
   };
 }
