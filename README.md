@@ -73,7 +73,7 @@ From `wpa_cli` do:
 > quit
 ```
 
-Partition the disk and leave the Windows boot partition (`SYSTEM`) alone.
+Partition the disk and leave the Windows boot partition (`SYSTEM`) alone. A [partition script](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/oem-deployment-of-windows-desktop-editions-sample-scripts?view=windows-11&preserve-view=true#createpartitions-uefitxt) for Windows is available on Microsoft documentation.
 
 Mount partitions.
 
