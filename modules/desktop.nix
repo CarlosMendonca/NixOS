@@ -24,13 +24,17 @@
         show-screenshot-ui=['<Shift><Super>s']
       ''; # TODO consider moving the screenshot keybinding to the host config level, since this is keyboard-specific
 
-      # desktopManager.xterm.enable = false; # see line below
-      xserver.excludePackages = [ pkgs.xterm ]; # no longer necessary since we're no longer enabling xserver?
+      xserver = {
+        # enable = true;
+        
+        # desktopManager.xterm.enable = false; # see line below
+        excludePackages = [ pkgs.xterm ]; # no longer necessary since we're no longer enabling xserver?
 
-      xserver.xkb = {
-        layout = "us,us";
-        variant = "intl,"; # will assume every keyboard is US International
-        options = "grp:alt_shift_toggle";
+        xkb = {
+          layout = "us,us";
+          variant = "intl,"; # will assume every keyboard is US International
+          options = "grp:alt_shift_toggle";
+        };
       };
     };
 
@@ -40,11 +44,22 @@
       defaultCharset = "UTF-8"; # already the default, just making explicit
       supportedLocales = [ "en_US.UTF-8/UTF-8" "pt_BR.UTF-8/UTF-8" ];
       extraLocaleSettings = { LC_CTYPE = "pt_BR.UTF-8"; }; # will assume every leyboard is US International; this fixes ' + c for cedilla
+
+      inputMethod = {
+        enable = true;
+        type = "ibus";
+      };
     };
 
     users.users.gdm.extraGroups = [ "video" ];
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1"; # enable Ozone support for Electron apps -- see https://nixos.wiki/wiki/Visual_Studio_Code
+
+    # The following seems to be incompatible with ibus
+    # environment.variables = {
+    #   GTK_IM_MODULE = "cedilla";
+    #   QT_IM_MODULE = "cedilla";
+    # };
 
     environment.gnome.excludePackages = [
       # pkgs.gnome-photos
