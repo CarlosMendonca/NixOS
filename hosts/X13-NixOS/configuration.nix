@@ -25,7 +25,16 @@ in
   networking.hostName = "X13-NixOS";
   # time.timeZone = "America/New_York"; # defining time zone stactically doesn't work well for laptops, since they need to change often
   time.timeZone = lib.mkDefault null;
-  services.automatic-timezoned.enable = true;
+  # services.automatic-timezoned.enable = true; # this is not needed if you're running Gnome
+
+  services.geoclue2 = {
+    enable = true;
+    geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+    appConfig."gnome-datetime-panel" = { # pre-grant Gnome permission to use location without prompts; TODO make this modular and conditional based on Gnome enablement (desktop role)
+      isAllowed = true;
+      isSystem = true;
+    };
+  };
 
   system.stateVersion = stateVersion;
 

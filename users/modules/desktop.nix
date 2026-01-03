@@ -6,6 +6,19 @@
       vscode.enable = true;
     };
 
+    dconf.settings = lib.mkMerge [
+      (lib.mkIf systemConfig.services.geoclue2.enable {
+        "org/gnome/system/location" = {
+          enabled = true;
+        };
+      })
+      (lib.mkIf (systemConfig.services.geoclue2.enable && systemConfig.time.timeZone == null) {
+        "org/gnome/desktop/datetime" = {
+          automatic-timezone = true;
+        };
+      })
+    ];
+
     home.packages = [
       # Fonts
       pkgs.nerd-fonts.iosevka
