@@ -23,7 +23,10 @@ in
 
   # System-specific settings
   networking.hostName = "X13-NixOS";
-  time.timeZone = "America/New_York";
+  # time.timeZone = "America/New_York"; # defining time zone stactically doesn't work well for laptops, since they need to change often
+  time.timeZone = lib.mkDefault null;
+  services.automatic-timezoned.enable = true;
+
   system.stateVersion = stateVersion;
 
   # System-wide packages specific to this system
