@@ -43,7 +43,7 @@
       defaultLocale = "en_US.UTF-8"; # already the default, just making explicit
       defaultCharset = "UTF-8"; # already the default, just making explicit
       supportedLocales = [ "en_US.UTF-8/UTF-8" "pt_BR.UTF-8/UTF-8" ];
-      extraLocaleSettings = { LC_CTYPE = "pt_BR.UTF-8"; }; # will assume every leyboard is US International; this fixes ' + c for cedilla
+      # extraLocaleSettings = { LC_CTYPE = "pt_BR.UTF-8"; }; # will assume every leyboard is US International; this fixes ' + c for cedilla; no longer necessary since we've started using ibus with custom Compose rules
 
       inputMethod = {
         enable = true;
