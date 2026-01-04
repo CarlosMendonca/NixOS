@@ -28,6 +28,8 @@
       # pkgs.pinta # simple photo editor
       pkgs.rustdesk-flutter # consider moving this to system-wide, since it's also a remoting server
       pkgs.spotify-player
+
+      pkgs.wl-clipboard-rs
     ];
   };
 }

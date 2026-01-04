@@ -47,6 +47,11 @@
       };
 
       home.language.base = "en_US.UTF-8";
+      
+      programs.bash.shellAliases = {
+        pbcopy = "wl-copy";
+        pbpaste = "wl-paste";
+      };
 
       # home.packages = []; # packages that are exclusive to this user
     };
