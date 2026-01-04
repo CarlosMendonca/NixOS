@@ -29,7 +29,7 @@
       pkgs.rustdesk-flutter # consider moving this to system-wide, since it's also a remoting server
       pkgs.spotify-player
 
-      pkgs.wl-clipboard-rs
+      pkgs.wl-clipboard # pkgs.wl-clipboard-rs doesn't work with GNOME
     ];
   };
 }
