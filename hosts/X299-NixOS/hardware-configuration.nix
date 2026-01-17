@@ -48,7 +48,7 @@ in
   hardware = {
     cpu.intel.updateMicrocode = true;
 
-    enableAllFirmware = true; # required for AX210, amdgpu, and potentially others
+    enableAllFirmware = true; # required by some hardware
 
     graphics = {
       enable = true;
@@ -72,12 +72,12 @@ in
       modesetting.enable = true;
       nvidiaSettings = true;
       open = true;
-
-      powerManagement = {
-        enable = true;
-        # finegrained = true; # finegrained power management requires offload to be enabled, which is not necessary in this host
-      };
     };
+  };
+
+  networking.interfaces.eno1.wakeOnLan = { # enable magic packet wake on lan for this interface, specifically
+    enable = true;
+    policy = [ "magic" ];
   };
 
   services = {
