@@ -13,6 +13,8 @@
           "video" # TODO make this conditional to the desktop role
       ] ++ lib.optionals config.roles.virtualization.enable [
           "libvirtd"
+      ] ++ lib.optionals config.roles.containers.enable [
+          "podman"
       ];
       initialPassword = "pass@word1";
 

@@ -1,6 +1,7 @@
 { lib, pkgs, ... }: {
   imports = [
     ./bluetooth.nix
+    ./containers.nix
     ./desktop.nix
     ./development.nix
     ./remoting.nix
