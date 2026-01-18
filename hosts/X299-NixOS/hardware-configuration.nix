@@ -32,7 +32,7 @@ in
         "wl" # wireless network -- not sure if really needed for this host
       ];
 
-      kernelPackages = pkgs.linuxPackages_6_16; # alternative to linuxPackages_latest
+      kernelPackages = pkgs.linuxPackages_6_18; # alternative to linuxPackages_latest
 
       kernelParams = [
       ];
