@@ -5,6 +5,7 @@
     ./development.nix
     ./remoting.nix
     ./sound.nix
+    ./virtualization.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

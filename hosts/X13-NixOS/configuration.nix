@@ -12,6 +12,7 @@ in
   # Enable roles
   roles.development.enable = true;
   roles.remoting.enable = true;
+  roles.virtualization.enable = true;
 
   # Enable users -- ideally we declare which roles this user, on this host have, but since we have only one user so far, we assume all system roles also apply at the home-manager level
   users.carlos.enable = true;

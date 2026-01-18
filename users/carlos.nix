@@ -11,6 +11,8 @@
           "wheel"
           "networkmanager" # doesn't need to be conditional because we assume every host has networking
           "video" # TODO make this conditional to the desktop role
+      ] ++ lib.optionals config.roles.virtualization.enable [
+          "libvirtd"
       ];
       initialPassword = "pass@word1";
 
