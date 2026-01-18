@@ -1,8 +1,21 @@
 { ... }: {
+  imports = [
+    ./desktop.nix
+    ./development.nix
+  ];
+
   programs = {
+    bash = {
+      enable = true;
+      historySize = -1;
+      historyFileSize = -1;
+      historyControl = [ "ignoredups" "ignorespace" ];
+      historyIgnore = [ "ls" "exit" ];
+    };
+
     git = {
       enable = true;
-      extraConfig.init.defaultBranch = "main";
+      settings.init.defaultBranch = "main";
     };
   };
 

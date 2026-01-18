@@ -4,45 +4,49 @@ let
 in
 {
   imports = [
-    #Hardware configuration
     ./hardware-configuration.nix
-
-    # System roles and functions
-    ../../modules/development.nix
-    ../../modules/remoting.nix
-
-    # Users
-    ../../users/carlos.nix # TODO consider going back to having system and home as variables
+    ../../modules # system roles and functions
+    ../../users
   ];
 
+  # Enable roles
+  roles.development.enable = true;
+  roles.remoting.enable = true;
+
+  # Enable users -- ideally we declare which roles this user, on this host have, but since we have only one user so far, we assume all system roles also apply at the home-manager level
+  users.carlos.enable = true;
+  nix.settings.trusted-users = [ "carlos" ];
+  
   # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
 
   nixpkgs.config.allowUnfree = true;
 
   # System-specific settings
   networking.hostName = "X13-NixOS";
-  time.timeZone = "America/New_York";
+  # time.timeZone = "America/New_York"; # defining time zone stactically doesn't work well for laptops, since they need to change often
+  time.timeZone = lib.mkDefault null;
+  # services.automatic-timezoned.enable = true; # this is not needed if you're running Gnome
+
+  services.geoclue2 = {
+    enable = true;
+    geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+    appConfig."gnome-datetime-panel" = { # pre-grant Gnome permission to use location without prompts; TODO make this modular and conditional based on Gnome enablement (desktop role)
+      isAllowed = true;
+      isSystem = true;
+    };
+  };
+
   system.stateVersion = stateVersion;
 
   # System-wide packages specific to this system
   environment.systemPackages = [ ];
 
-  # User system settings
-  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
-
   # Home-Manager settings
   home-manager = {
-    extraSpecialArgs = { inherit pkgs-unstable; };
-
-    # User home settings
-    users.carlos = {
-        imports = [
-          ../../users/modules/development.nix
-        ];
-
-        home.stateVersion = stateVersion; # done this way to extract Home-Manager's stateVersion to the system level and make sure it matches system.stateVersion
-      };
-    
+    extraSpecialArgs = {
+      inherit pkgs-unstable;
+      systemConfig = config; # passing the system level config to inside home-manager, so we can enable system roles inside home-manager
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
   };

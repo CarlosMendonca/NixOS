@@ -1,15 +1,15 @@
-{ config, pkgs, pkgs-unstable, ... }: {
-  imports = [
-    ./. # default.nix
-    ./desktop.nix # development role is necessarily desktop role too (GUI)
-  ];
-  
-  home.packages = [
-    pkgs.devenv
-    pkgs.github-desktop
-    pkgs.lazygit
-    # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
-    
-    pkgs-unstable.code-cursor
-  ];
+{ systemConfig, lib, pkgs, pkgs-unstable, ... }: {
+  config = lib.mkIf systemConfig.roles.development.enable {
+    home.packages = [
+      pkgs-unstable.devenv
+      pkgs.github-desktop
+      pkgs.lazygit
+      # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
+      pkgs.tree
+
+      pkgs-unstable.antigravity
+      pkgs-unstable.claude-code
+      pkgs-unstable.code-cursor
+    ];
+  };
 }

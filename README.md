@@ -73,7 +73,7 @@ From `wpa_cli` do:
 > quit
 ```
 
-Partition the disk and leave the Windows boot partition (`SYSTEM`) alone.
+Partition the disk and leave the Windows boot partition (`SYSTEM`) alone. A [partition script](https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/oem-deployment-of-windows-desktop-editions-sample-scripts?view=windows-11&preserve-view=true#createpartitions-uefitxt) for Windows is available on Microsoft documentation.
 
 Mount partitions.
 
@@ -86,6 +86,24 @@ Set the password for user `carlos` with:
 ```
 $ nixos-enter --root /mnt -c "passwd carlos"
 $ reboot now
+```
+
+## Maintenance
+If the /boot partition becomes full, you may want to delete old generations. List generations with:
+```
+$ df
+$ ls /boot/EFI/nixos -lh
+$ nixos-rebuild list-generations
+```
+
+Collect some garbage with:
+```
+$ sudo nixos-collect-garbage --delete-older-than 15d
+```
+
+Force rebuild for remaining generations with:
+```
+$ sudo /run/current-system/bin/switch-to-configuration boot
 ```
 
 ## TO-DOs

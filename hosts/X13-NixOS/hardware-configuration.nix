@@ -37,7 +37,8 @@ in
         "wl" # wireless network
       ];
 
-      kernelPackages = pkgs.linuxPackages_6_16; # alternative to linuxPackages_latest
+      # Check available kernel versions with: nix repl, :l <nixpkgs>, pkgs.linuxPackages_ <TAB>
+      kernelPackages = pkgs.linuxPackages_6_18; # alternative to linuxPackages_latest; TODO consider trying Zen kernel and its variations
 
       kernelParams = [
         "mem_sleep_default=deep"
@@ -126,13 +127,13 @@ in
   specialisation.nvidia.configuration = {
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.76.05";
+        version = "590.44.01"; # beta driver for 6.18 kernel for now; from https://www.nvidia.com/en-us/drivers/unix
         
-        sha256_64bit = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
+        sha256_64bit = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms=";
         sha256_aarch64 = lib.fakeHash;
-        openSha256 = "sha256-xEPJ9nskN1kISnSbfBigVaO6Mw03wyHebqQOQmUg/eQ=";
-        settingsSha256 = "sha256-ll7HD7dVPHKUyp5+zvLeNqAb6hCpxfwuSyi+SAXapoQ=";
-        persistencedSha256 = "sha256-IZvmNrYJMbAhsujB4O/4hzY8cx+KlAyqh7zAVNBdl/0=";
+        openSha256 = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o=";
+        settingsSha256 = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4=";
+        persistencedSha256 = "sha256-nHzD32EN77PG75hH9W8ArjKNY/7KY6kPKSAhxAWcuS4=";
       };
 
       dynamicBoost.enable = true;
