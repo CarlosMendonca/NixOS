@@ -13,6 +13,8 @@
     };
 
     services = {
+      printing.enable = true; # Enable CUPS for printer support
+
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
 
