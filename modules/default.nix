@@ -5,6 +5,7 @@
     ./desktop.nix
     ./development.nix
     ./remoting.nix
+    ./retro-gaming.nix
     ./sound.nix
     ./virtualization.nix
   ];
