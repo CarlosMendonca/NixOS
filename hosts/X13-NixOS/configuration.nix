@@ -12,7 +12,7 @@ in
   # Enable roles
   roles.development.enable = true;
   roles.remoting.enable = true;
-  # roles.retro-gaming.enable = true;
+  roles.retro-gaming.enable = true;
 
   roles.containers.enable = true;
   # roles.virtualization.enable = true;
