@@ -14,8 +14,13 @@ in
   roles.remoting.enable = true;
 
   # Enable users
-  users.carlos.enable = true;
-  users.carlos.trusted = true;
+  users.carlos = {
+    enable = true;
+    trusted = true;
+    canUseDesktop = true;
+    canUseContainers = true;
+    canUseVirtualization = true; # won't matter unless Virtualization role is enabled
+  };
 
   # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
 

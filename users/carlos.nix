@@ -3,6 +3,9 @@
   options.users.carlos = {
     enable = lib.mkEnableOption "Carlos' user configuration";
     trusted = lib.mkEnableOption "trusted user for Nix operations";
+    canUseDesktop = lib.mkEnableOption "desktop access (adds video group)";
+    canUseVirtualization = lib.mkEnableOption "virtualization access (adds libvirtd group)";
+    canUseContainers = lib.mkEnableOption "container access (adds podman group)";
   };
 
   config = lib.mkIf config.users.carlos.enable {
@@ -13,10 +16,11 @@
       extraGroups = [
           "wheel"
           "networkmanager" # doesn't need to be conditional because we assume every host has networking
-          "video" # TODO make this conditional to the desktop role
-      ] ++ lib.optionals config.roles.virtualization.enable [
+      ] ++ lib.optionals (config.users.carlos.canUseDesktop && config.roles.desktop.enable) [
+          "video"
+      ] ++ lib.optionals (config.users.carlos.canUseVirtualization && config.roles.virtualization.enable) [
           "libvirtd"
-      ] ++ lib.optionals config.roles.containers.enable [
+      ] ++ lib.optionals (config.users.carlos.canUseContainers && config.roles.containers.enable) [
           "podman"
       ];
       initialPassword = "pass@word1";
