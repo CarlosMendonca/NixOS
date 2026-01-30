@@ -15,7 +15,7 @@ in
 
   # Enable users
   users.carlos.enable = true;
-  nix.settings.trusted-users = [ "carlos" ]; # TODO figure out if there's a better way to declare this
+  users.carlos.trusted = true;
 
   # boot.plymouth.enable = true; # see https://wiki.nixos.org/wiki/Plymouth
 

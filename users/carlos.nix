@@ -2,9 +2,12 @@
 {
   options.users.carlos = {
     enable = lib.mkEnableOption "Carlos' user configuration";
+    trusted = lib.mkEnableOption "trusted user for Nix operations";
   };
 
   config = lib.mkIf config.users.carlos.enable {
+    nix.settings.trusted-users = lib.mkIf config.users.carlos.trusted [ "carlos" ];
+
     users.users.carlos = {
       isNormalUser = true;
       extraGroups = [
