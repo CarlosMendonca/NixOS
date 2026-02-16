@@ -46,6 +46,7 @@ in
         "amdgpu.sg_display=0" # can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
         # "amdgpu.dcdebugmask=0x10" # same as above; disabling PANEL SELF REFRESH
         "amdgpu.dcdebugmask=0x400" # trying out a disabling PANEL REPLAY, but not PANEL SELF REFRESH; see https://community.frame.work/t/screen-flickering-on-linux-kernel-6-12/62632/39
+        "amdgpu.gpu_recovery=1" # attempting to recover the GPU when it times out; see https://github.com/ROCm/amdgpu/blob/roc-2.0.0/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c#L493
       ];
 
       loader = {
