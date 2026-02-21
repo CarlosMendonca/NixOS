@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, pkgs-unstable, ... }: {
   options.roles.containers = {
     enable = lib.mkEnableOption "Container support with Podman";
   };
@@ -14,6 +14,8 @@
       pkgs.podman-compose
       # pkgs.podman-tui
       pkgs.podman-desktop
+
+      pkgs-unstable.distrobox
     ];
   };
 }
