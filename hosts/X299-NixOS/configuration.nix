@@ -32,7 +32,9 @@ in
   system.stateVersion = stateVersion;
 
   # System-wide packages specific to this system
-  environment.systemPackages = [ ];
+  environment.systemPackages = [
+    pkgs-unstable.solaar
+  ];
 
   # Home-Manager settings
   home-manager = {

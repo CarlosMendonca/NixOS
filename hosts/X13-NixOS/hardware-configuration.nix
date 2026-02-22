@@ -70,6 +70,8 @@ in
   ];
 
   hardware = {
+    primaryDisplay.verticalResolution = 1600;
+
     amdgpu.initrd.enable = true;
 
     cpu.amd.updateMicrocode = true;

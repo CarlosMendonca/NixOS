@@ -46,6 +46,8 @@ in
   ];
 
   hardware = {
+    primaryDisplay.verticalResolution = 2160;
+
     cpu.intel.updateMicrocode = true;
 
     enableAllFirmware = true; # required for AX210, amdgpu, and potentially others
