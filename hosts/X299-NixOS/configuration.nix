@@ -26,6 +26,16 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  # Use solaar from nixpkgs-unstable for newer version
+  nixpkgs.overlays = [
+    (final: prev: {
+      solaar = pkgs-unstable.solaar;
+    })
+  ];
+
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = config.roles.desktop.enable;
+
   # System-specific settings
   networking.hostName = "X299-NixOS";
   time.timeZone = "America/New_York";
