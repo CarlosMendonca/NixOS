@@ -100,6 +100,10 @@ Collect some garbage with:
 ```
 $ sudo nixos-collect-garbage --delete-older-than 15d
 ```
+Alternatively:
+```
+$ sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5
+```
 
 Force rebuild for remaining generations with:
 ```
