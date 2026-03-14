@@ -3,6 +3,7 @@
     ./bluetooth.nix
     ./containers.nix
     ./desktop.nix
+    ./external-monitor.nix
     ./development.nix
     ./remoting.nix
     ./retro-gaming.nix

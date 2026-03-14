@@ -95,6 +95,9 @@
       # pkgs.dconf-editor
 
       pkgs.easyeffects # GTk4 PipeWire audio mixer
+    ] ++ lib.optionals config.roles.external-monitor.enable [
+      pkgs.gnomeExtensions.brightness-control-using-ddcutil
+      # pkgs.gnomeExtensions.control-monitor-brightness-and-volume-with-ddcutil # Not as configurable as the other extension, but supports volume control
     ];
 
     programs.localsend.enable = true;

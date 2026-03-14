@@ -10,6 +10,8 @@ in
   ];
 
   # Enable roles
+  roles.external-monitor.enable = true;
+
   roles.development.enable = true;
   roles.remoting.enable = true;
   
