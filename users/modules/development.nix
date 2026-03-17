@@ -3,13 +3,14 @@
     home.packages = [
       pkgs-unstable.devenv
       pkgs.github-desktop
+      pkgs.gh
       pkgs.lazygit
       # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
       pkgs.tree
 
       pkgs-unstable.antigravity
       pkgs-unstable.claude-code
-      pkgs-unstable.code-cursor
+      # pkgs-unstable.code-cursor
     ];
   };
 }

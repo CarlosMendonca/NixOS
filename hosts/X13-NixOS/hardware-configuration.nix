@@ -34,7 +34,7 @@ in
       kernelModules = [
         "kvm-amd"
         "zenpower"
-        "wl" # wireless network
+        # "wl" # Broadcom wireless network -- not needed for this config
       ];
 
       # Check available kernel versions with: nix repl, :l <nixpkgs>, pkgs.linuxPackages_ <TAB>
@@ -54,6 +54,8 @@ in
         systemd-boot.configurationLimit = 25;
         efi.canTouchEfiVariables = true;
       };
+      
+      resumeDevice = "/dev/disk/by-label/swap";
     }
 
     # AMD P-State optimiizations from https://github.com/NixOS/nixos-hardware/blob/master/common/cpu/amd/pstate.nix; see https://www.kernel.org/doc/html/latest/admin-guide/pm/amd-pstate.html
