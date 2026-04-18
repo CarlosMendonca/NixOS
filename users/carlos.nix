@@ -10,6 +10,7 @@ in
     canUseDesktop = lib.mkEnableOption "desktop access (adds video group)";
     canUseVirtualization = lib.mkEnableOption "virtualization access (adds libvirtd group)";
     canUseContainers = lib.mkEnableOption "container access (adds podman group)";
+    canUseAndroidStudio = lib.mkEnableOption "Android Studio access (adds kvm and adbusers groups)";
   };
 
   config = lib.mkIf config.users.carlos.enable {
@@ -26,6 +27,9 @@ in
           "libvirtd"
       ] ++ lib.optionals (config.users.carlos.canUseContainers && config.roles.containers.enable) [
           "podman"
+      ] ++ lib.optionals (config.users.carlos.canUseAndroidStudio && config.roles.development.androidStudio.enable) [
+          "kvm"
+          "adbusers"
       ];
       initialPassword = "pass@word1";
 

@@ -11,6 +11,7 @@ in
 
   # Enable roles
   roles.development.enable = true;
+  roles.development.androidStudio.enable = true;
   roles.remoting.enable = true;
   roles.retro-gaming.enable = true;
 
@@ -21,6 +22,8 @@ in
     enable = true;
     trusted = true;
     canUseDesktop = true;
+
+    canUseAndroidStudio = true;
     canUseContainers = true;
     canUseVirtualization = true; # won't matter unless Virtualization role is enabled
   };

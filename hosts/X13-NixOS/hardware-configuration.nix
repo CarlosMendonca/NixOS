@@ -38,20 +38,21 @@ in
       ];
 
       # Check available kernel versions with: nix repl, :l <nixpkgs>, pkgs.linuxPackages_ <TAB>
-      kernelPackages = pkgs.linuxPackages_6_18; # alternative to linuxPackages_latest; TODO consider trying Zen kernel and its variations
+      # kernelPackages = pkgs.linuxPackages_6_19; # alternative to linuxPackages_latest; TODO consider trying Zen kernel and its variations
+      kernelPackages = pkgs.linuxPackages_6_12; # 6.18 has been very buggy on amdgpu; trying something older (latest LTS) as a temporary workaround
 
       kernelParams = [
         "mem_sleep_default=deep"
         "pcie_aspm.policy=powersupersave"
         "amdgpu.sg_display=0" # can help solve flickering/glitching display issues since Scatter/Gather code was reenabled
-        # "amdgpu.dcdebugmask=0x10" # same as above; disabling PANEL SELF REFRESH
-        "amdgpu.dcdebugmask=0x400" # trying out a disabling PANEL REPLAY, but not PANEL SELF REFRESH; see https://community.frame.work/t/screen-flickering-on-linux-kernel-6-12/62632/39
+        "amdgpu.dcdebugmask=0x10" # same as above; disabling PANEL SELF REFRESH
+        # "amdgpu.dcdebugmask=0x400" # trying out a disabling PANEL REPLAY, but not PANEL SELF REFRESH; see https://community.frame.work/t/screen-flickering-on-linux-kernel-6-12/62632/39
         "amdgpu.gpu_recovery=1" # attempting to recover the GPU when it times out; see https://github.com/ROCm/amdgpu/blob/roc-2.0.0/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c#L493
       ];
 
       loader = {
         systemd-boot.enable = true;
-        systemd-boot.configurationLimit = 25;
+        systemd-boot.configurationLimit = 20;
         efi.canTouchEfiVariables = true;
       };
       
@@ -132,13 +133,24 @@ in
   specialisation.nvidia.configuration = {
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "590.44.01"; # beta driver for 6.18 kernel for now; from https://www.nvidia.com/en-us/drivers/unix
+        version = "580.142";
+        # version = "590.44.01";
+        # version = "590.48.01";
         
-        sha256_64bit = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms=";
+        # sha256_64bit = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms="; # 590.44.01
+        # sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok="; # 590.48.01
+        sha256_64bit = "sha256-IJFfzz/+icNVDPk7YKBKKFRTFQ2S4kaOGRGkNiBEdWM="; # 580.142
+
+        # openSha256 = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o="; # 590.44.01
+        openSha256 = "sha256-v968LbRqy8jB9+yHy9ceP2TDdgyqfDQ6P41NsCoM2AY="; # 580.142
+
+        # settingsSha256 = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4="; # 590.44.01
+        settingsSha256 = "sha256-BnrIlj5AvXTfqg/qcBt2OS9bTDDZd3uhf5jqOtTMTQM="; # 580.142
+
+        # persistencedSha256 = "sha256-nHzD32EN77PG75hH9W8ArjKNY/7KY6kPKSAhxAWcuS4="; # 590.44.01
+        persistencedSha256 = lib.fakeHash; # 590.44.01
+
         sha256_aarch64 = lib.fakeHash;
-        openSha256 = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o=";
-        settingsSha256 = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4=";
-        persistencedSha256 = "sha256-nHzD32EN77PG75hH9W8ArjKNY/7KY6kPKSAhxAWcuS4=";
       };
 
       dynamicBoost.enable = true;
