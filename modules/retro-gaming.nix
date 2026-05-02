@@ -8,10 +8,11 @@
     roles.desktop.enable = lib.mkDefault true;
 
     environment.systemPackages = [
-      (pkgs.retroarch.withCores (cores: with cores; [
-        dosbox-pure
-        scummvm
-      ]))
+      # pkgs.retroarch.withCores (cores: with cores; [ dosbox-pure scummvm ])
+      pkgs.lutris
+      pkgs.dosbox
+      pkgs.dosbox-x
+      pkgs.dosbox-staging
     ];
   };
 }

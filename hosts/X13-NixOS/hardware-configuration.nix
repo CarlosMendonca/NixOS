@@ -1,6 +1,53 @@
 { config, lib, pkgs, ... }:
 let
   kernelVersion = config.boot.kernelPackages.kernel.version;
+
+  # ── Kernel variants ────────────────────────────────────────────────────────
+  # Stable LTS kernel. Used by base config and nvidia specialisation.
+  # 6.18 has been buggy on amdgpu; 6.12 is the current stable workaround.
+  stableKernelPackages = pkgs.linuxPackages_6_12;
+
+  # Experimental: newer kernel without Nvidia. Change here to try other kernels.
+  experimentalKernelPackages = pkgs.linuxPackages_7_0;
+
+  # ── Nvidia driver ──────────────────────────────────────────────────────────
+  # Update version + hashes here to change the driver across all specialisations.
+  nvidiaDriverConfig = {
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "580.142";
+      # sha256_64bit      = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms="; # 590.44.01
+      # sha256_64bit      = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok="; # 590.48.01
+      sha256_64bit      = "sha256-IJFfzz/+icNVDPk7YKBKKFRTFQ2S4kaOGRGkNiBEdWM="; # 580.142
+
+      # openSha256        = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o="; # 590.44.01
+      openSha256        = "sha256-v968LbRqy8jB9+yHy9ceP2TDdgyqfDQ6P41NsCoM2AY="; # 580.142
+
+      # settingsSha256    = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4="; # 590.44.01
+      settingsSha256    = "sha256-BnrIlj5AvXTfqg/qcBt2OS9bTDDZd3uhf5jqOtTMTQM="; # 580.142
+
+      persistencedSha256 = lib.fakeHash;
+      sha256_aarch64    = lib.fakeHash;
+    };
+
+    dynamicBoost.enable = true;
+    modesetting.enable  = true;
+    nvidiaSettings      = true;
+    open                = true;
+
+    powerManagement = {
+      enable      = true;
+      finegrained = true;
+    };
+
+    prime = {
+      offload = {
+        enable           = true;
+        enableOffloadCmd = true;
+      };
+      amdgpuBusId = "PCI:69:0:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
 in
 {
   imports = [
@@ -38,8 +85,7 @@ in
       ];
 
       # Check available kernel versions with: nix repl, :l <nixpkgs>, pkgs.linuxPackages_ <TAB>
-      # kernelPackages = pkgs.linuxPackages_6_19; # alternative to linuxPackages_latest; TODO consider trying Zen kernel and its variations
-      kernelPackages = pkgs.linuxPackages_6_12; # 6.18 has been very buggy on amdgpu; trying something older (latest LTS) as a temporary workaround
+      kernelPackages = stableKernelPackages;
 
       kernelParams = [
         "mem_sleep_default=deep"
@@ -129,52 +175,17 @@ in
     { device = "/dev/disk/by-label/swap"; } # not sure if 32 or 64GB
   ];
 
-  # Specialisation for enabling the RTX 4070 GPU
+  # Specialisation for enabling the RTX 4070 GPU (kernel 6.12 + Nvidia 580.142)
   specialisation.nvidia.configuration = {
-    hardware.nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "580.142";
-        # version = "590.44.01";
-        # version = "590.48.01";
-        
-        # sha256_64bit = "sha256-VbkVaKwElaazojfxkHnz/nN/5olk13ezkw/EQjhKPms="; # 590.44.01
-        # sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok="; # 590.48.01
-        sha256_64bit = "sha256-IJFfzz/+icNVDPk7YKBKKFRTFQ2S4kaOGRGkNiBEdWM="; # 580.142
+    boot.kernelPackages = lib.mkForce stableKernelPackages;
+    
+    hardware.nvidia = nvidiaDriverConfig;
+    services.xserver.videoDrivers = [ "nvidia" ];
+  };
 
-        # openSha256 = "sha256-ft8FEnBotC9Bl+o4vQA1rWFuRe7gviD/j1B8t0MRL/o="; # 590.44.01
-        openSha256 = "sha256-v968LbRqy8jB9+yHy9ceP2TDdgyqfDQ6P41NsCoM2AY="; # 580.142
-
-        # settingsSha256 = "sha256-wVf1hku1l5OACiBeIePUMeZTWDQ4ueNvIk6BsW/RmF4="; # 590.44.01
-        settingsSha256 = "sha256-BnrIlj5AvXTfqg/qcBt2OS9bTDDZd3uhf5jqOtTMTQM="; # 580.142
-
-        # persistencedSha256 = "sha256-nHzD32EN77PG75hH9W8ArjKNY/7KY6kPKSAhxAWcuS4="; # 590.44.01
-        persistencedSha256 = lib.fakeHash; # 590.44.01
-
-        sha256_aarch64 = lib.fakeHash;
-      };
-
-      dynamicBoost.enable = true;
-
-      modesetting.enable = true;
-      nvidiaSettings = true;
-      open = true;
-
-      powerManagement = {
-        enable = true;
-        finegrained = true;
-      };
-
-      prime = {
-        offload = {
-          enable = true;
-          enableOffloadCmd = true;
-        };
-
-        amdgpuBusId = "PCI:69:0:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
-
-    services.xserver.videoDrivers = [ "nvidia" ]; # adds to the list of video drivers
+  # Specialisation for testing a newer kernel without Nvidia (AMD iGPU only).
+  # Change experimentalKernelPackages in the let block to try other kernels.
+  specialisation.experimental.configuration = {
+    boot.kernelPackages = lib.mkForce experimentalKernelPackages;
   };
 }
