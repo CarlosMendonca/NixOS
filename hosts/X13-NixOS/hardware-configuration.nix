@@ -2,7 +2,7 @@
 let
   kernelVersion = config.boot.kernelPackages.kernel.version;
 
-  nvidiaDriver580_142 = import ../../modules/nvidia/580_142.nix config.boot.kernelPackages;
+  nvidiaDriver580_142_kernel6_12 = import ../../modules/nvidia/580_142.nix pkgs.linuxPackages_6_12;
 in
 {
   imports = [
@@ -110,7 +110,7 @@ in
     boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_12;
     roles.nvidia = {
       enable                      = true;
-      package                     = nvidiaDriver580_142;
+      package                     = nvidiaDriver580_142_kernel6_12;
       powerManagement.finegrained = true;
       prime = {
         offload = {
