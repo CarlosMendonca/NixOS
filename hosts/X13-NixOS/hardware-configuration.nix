@@ -51,8 +51,6 @@ let
 in
 {
   imports = [
-    # ../../modules/bluetooth.nix # Bluetooth seems to work without needing to include this -- may be enabled elsewhere
-    # ../../modules/sound.nix # sounds like sound works without needing to enable this
   ];
 
   boot = lib.mkMerge [
