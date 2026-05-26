@@ -39,7 +39,6 @@
     networking = {
       # useNetworkd = true; # conflicts with Network Manager
       networkmanager.enable = true;
-      useDHCP = lib.mkForce true; # can also define this per-interface
     };
 
     environment.systemPackages = [
