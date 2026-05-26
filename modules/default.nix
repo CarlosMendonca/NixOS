@@ -1,5 +1,6 @@
 { lib, pkgs, ... }: {
   imports = [
+    ./nvidia
     ./bluetooth.nix
     ./containers.nix
     ./desktop.nix
