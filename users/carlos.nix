@@ -59,6 +59,8 @@ in
       };
 
       home.file."Pictures/carlos.jpg".source = ../assets/carlos.jpg; # TODO change to a configuration once it gets implemented; see https://github.com/NixOS/nixpkgs/issues/163080
+      home.file."Pictures/headshot_banff_zoom.jpeg".source = ../assets/headshot_banff_zoom.jpeg;
+      home.file."Pictures/headshot_banff_zoom_silver.jpeg".source = ../assets/headshot_banff_zoom_silver.jpeg;
 
       # Wallpapers for secondary displays
       home.file."Pictures/Wallpapers/Rancho_day_1600.png".source = ../assets/Rancho_day_1600.png;
