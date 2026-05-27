@@ -11,7 +11,7 @@ in
 
   # Enable roles
   roles.development.enable = true;
-  roles.development.androidStudio.enable = true;
+  roles.development.androidStudio.enable = false;
   roles.remoting.enable = true;
   roles.retro-gaming.enable = true;
 
