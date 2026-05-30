@@ -84,10 +84,7 @@ in
   };
 
   services = {
-    asusd = {
-      enable            = true;
-      enableUserService = true;
-    };
+    asusd.enable = true;
 
     fstrim.enable = true;
 

@@ -1,8 +1,11 @@
-{ systemConfig, lib, pkgs, ... }: {
+{ systemConfig, lib, pkgs, config, ... }: {
   config = lib.mkIf systemConfig.roles.desktop.enable {
     programs = {
       # chromium.enable = true; # using Google Chrome instead
-      firefox.enable = true;
+      firefox = {
+        enable = true;
+        configPath = "${config.xdg.configHome}/mozilla/firefox";
+      };
       vscode.enable = true;
     };
 
