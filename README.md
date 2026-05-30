@@ -100,12 +100,17 @@ Collect some garbage with:
 ```
 $ sudo nixos-collect-garbage --delete-older-than 15d
 ```
-Alternatively:
+
+Clean up old generations with:
 ```
 $ sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5
+$ sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 3 4 5
+$ sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations 30d
+
+$ sudo nix-collect-garbage -d
 ```
 
-Force rebuild for remaining generations with:
+Force rebuild for remaining generations with (i.e. clean up boot entries):
 ```
 $ sudo /run/current-system/bin/switch-to-configuration boot
 ```
