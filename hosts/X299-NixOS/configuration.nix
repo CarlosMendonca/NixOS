@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-unstable, pkgs-llm-agents, ... }:
 let
   stateVersion = "25.05";
 in
@@ -55,6 +55,7 @@ in
   home-manager = {
     extraSpecialArgs = {
       inherit pkgs-unstable;
+      inherit pkgs-llm-agents;
       systemConfig = config;
     };
     useGlobalPkgs = true;

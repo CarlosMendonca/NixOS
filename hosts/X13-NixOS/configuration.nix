@@ -1,4 +1,4 @@
-{ config, lib, pkgs, pkgs-unstable, ... }:
+{ config, lib, pkgs, pkgs-unstable, pkgs-llm-agents, ... }:
 let
   stateVersion = "25.05";
 in
@@ -56,6 +56,7 @@ in
   home-manager = {
     extraSpecialArgs = {
       inherit pkgs-unstable;
+      inherit pkgs-llm-agents;
       systemConfig = config; # passing the system level config to inside home-manager, so we can enable system roles inside home-manager
     };
     useGlobalPkgs = true;

@@ -1,4 +1,4 @@
-{ systemConfig, lib, pkgs, pkgs-unstable, ... }: {
+{ systemConfig, lib, pkgs, pkgs-unstable, pkgs-llm-agents, ... }: {
   config = lib.mkIf systemConfig.roles.development.enable {
     home.packages = [
       pkgs-unstable.devenv
@@ -8,8 +8,10 @@
       # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
       pkgs.tree
 
+      pkgs-llm-agents.antigravity-cli
+      pkgs-llm-agents.claude-code
+
       pkgs-unstable.antigravity
-      pkgs-unstable.claude-code
       # pkgs-unstable.code-cursor
     ];
   };

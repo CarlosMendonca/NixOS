@@ -4,14 +4,15 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, ... } @inputs:
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, llm-agents, ... } @inputs:
     let
       X13-NixOS-host = import ./hosts/X13-NixOS;
       X299-NixOS-host = import ./hosts/X299-NixOS;
@@ -24,6 +25,7 @@
               system = X13-NixOS-host.system;
               config.allowUnfree = X13-NixOS-host.allowUnfree;
             };
+            pkgs-llm-agents = llm-agents.packages.${X13-NixOS-host.system};
           };
           modules = [
             X13-NixOS-host.module
@@ -39,6 +41,7 @@
               system = X299-NixOS-host.system;
               config.allowUnfree = X299-NixOS-host.allowUnfree;
             };
+            pkgs-llm-agents = llm-agents.packages.${X299-NixOS-host.system};
           };
           modules = [
             X299-NixOS-host.module
