@@ -3,7 +3,8 @@ let
   kernelVersion = config.boot.kernelPackages.kernel.version;
 
   nvidiaDriver580_142_kernel6_12 = import ../../modules/nvidia/580_142.nix pkgs.linuxPackages_6_12;
-  nvidiaDriver595_80_kernel7_0   = import ../../modules/nvidia/595_80.nix  pkgs.linuxPackages_7_0;
+  # nvidiaDriver595_80_kernel7_0   = import ../../modules/nvidia/595_80.nix  pkgs.linuxPackages_7_0;
+  nvidiaDriver595_80_kernel7_1   = import ../../modules/nvidia/595_80.nix  pkgs.linuxPackages_7_1;
 in
 {
   imports = [
@@ -37,7 +38,7 @@ in
         "zenpower"
       ];
 
-      kernelPackages = pkgs.linuxPackages_7_0;
+      kernelPackages = pkgs.linuxPackages_7_1;
 
       kernelParams = [
         "mem_sleep_default=deep"
@@ -105,10 +106,10 @@ in
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   specialisation.nvidia.configuration = {
-    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_0;
+    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_1;
     roles.nvidia = {
       enable                      = true;
-      package                     = nvidiaDriver595_80_kernel7_0;
+      package                     = nvidiaDriver595_80_kernel7_1;
       powerManagement.finegrained = true;
       prime = {
         offload = {
