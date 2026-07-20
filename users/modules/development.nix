@@ -10,6 +10,7 @@
 
       pkgs-llm-agents.antigravity-cli
       pkgs-llm-agents.claude-code
+      pkgs-llm-agents.opencode
 
       pkgs-unstable.antigravity
       # pkgs-unstable.code-cursor
