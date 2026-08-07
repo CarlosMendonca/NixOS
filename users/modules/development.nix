@@ -12,7 +12,7 @@
       pkgs-llm-agents.claude-code
       pkgs-llm-agents.opencode
 
-      pkgs-unstable.antigravity
+      pkgs-unstable.antigravity-ide
       # pkgs-unstable.code-cursor
     ];
   };
