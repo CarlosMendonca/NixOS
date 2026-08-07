@@ -13,36 +13,32 @@ in
   boot = lib.mkMerge [
     {
       blacklistedKernelModules = [
-        "k10temp" # AMD temperature sensor?
+        # "k10temp" # AMD temperature sensor?
         "nouveau"
       ];
 
-      extraModulePackages = [ config.boot.kernelPackages.zenpower ];
+      # extraModulePackages = [ config.boot.kernelPackages.zenpower ];
 
-      initrd = {
-        availableKernelModules = [
-          "nvme"
-          "xhci_pci"
-          "thunderbolt"
-          "usbhid"
-          "usb_storage"
-          "sd_mod"
-          "sdhci_pci"
-        ];
-
-        kernelModules = [ ];
-      };
+      initrd.availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "thunderbolt"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sdhci_pci"
+      ];
 
       kernelModules = [
         "kvm-amd"
-        "zenpower"
+        # "zenpower"
       ];
 
       kernelPackages = pkgs.linuxPackages_7_1;
 
       kernelParams = [
-        "mem_sleep_default=deep"
-        "pcie_aspm.policy=powersupersave"
+        # "mem_sleep_default=deep"
+        # "pcie_aspm.policy=powersupersave"
         "amdgpu.sg_display=0"
         "amdgpu.dcdebugmask=0x10"
         "amdgpu.gpu_recovery=1"
@@ -54,13 +50,13 @@ in
         efi.canTouchEfiVariables        = true;
       };
 
-      resumeDevice = "/dev/disk/by-label/swap";
+      # resumeDevice = "/dev/disk/by-label/swap"; # temporary disabling hibernation
     }
 
     # AMD P-State optimisations
     (lib.mkIf ((lib.versionAtLeast kernelVersion "5.17") && (lib.versionOlder kernelVersion "6.1")) {
       kernelParams  = [ "initcall_blacklist=acpi_cpufreq_init" ];
-      kernelModules = [ "amd-pstate" ];
+      kernelModules = [ "amd_pstate" ];
     })
     (lib.mkIf ((lib.versionAtLeast kernelVersion "6.1") && (lib.versionOlder kernelVersion "6.3")) {
       kernelParams = [ "amd_pstate=passive" ];
@@ -86,19 +82,24 @@ in
   };
 
   services = {
-    asusd.enable = true;
-
-    fstrim.enable = true;
-
+    asusd.enable     = true;
     supergfxd.enable = true;
 
-    tlp.enable = false;
+    fstrim.enable = true;
+    
+    tlp.enable = false; # deferring to power-profiles-daemon / asusd
 
     udev.extraHwdb = ''
       evdev:name:*:dmi:bvn*:bvr*:bd*:svnASUS*:pn*:*
       KEYBOARD_KEY_ff31007c=f20
     '';
   };
+
+  systemd.targets = {
+    hibernate.enable              = false;
+    hybrid-sleep.enable           = false;
+    suspend-then-hibernate.enable = false;
+  }; # temporary disabling hibernation
 
   fileSystems."/"     = { device = "/dev/disk/by-label/nixos";  fsType = "ext4"; };
   fileSystems."/boot" = { device = "/dev/disk/by-label/SYSTEM"; fsType = "vfat"; };
