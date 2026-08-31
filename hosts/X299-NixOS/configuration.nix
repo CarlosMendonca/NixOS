@@ -43,6 +43,7 @@ in
 
   # System-specific settings
   networking.hostName = "X299-NixOS";
+  networking.interfaces.eno1.wakeOnLan.enable = true; # allow magic packet to wake the machine
   time.timeZone = "America/New_York";
   system.stateVersion = stateVersion;
 

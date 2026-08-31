@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   nvidiaDriver590_44_01_kernel6_18 = import ../../modules/nvidia/590_44_01.nix pkgs.linuxPackages_6_18;
+  nvidiaDriver595_80_kernel7_1 = import ../../modules/nvidia/595_80.nix pkgs.linuxPackages_7_1;
 in
 {
   imports = [
@@ -28,7 +29,7 @@ in
         "wl"
       ];
 
-      kernelPackages = pkgs.linuxPackages_6_18;
+      kernelPackages = pkgs.linuxPackages_7_1;
 
       kernelParams = [ ];
 
@@ -54,7 +55,7 @@ in
 
   roles.nvidia = {
     enable  = true;
-    package = nvidiaDriver590_44_01_kernel6_18;
+    package = nvidiaDriver595_80_kernel7_1;
   };
 
   services = {
@@ -67,8 +68,8 @@ in
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  specialisation.experimental.configuration = {
-    boot.kernelPackages  = lib.mkForce pkgs.linuxPackages_7_0;
-    roles.nvidia.package = lib.mkForce (import ../../modules/nvidia/590_44_01.nix pkgs.linuxPackages_7_0);
-  };
+  #specialisation.experimental.configuration = {
+  #  boot.kernelPackages  = lib.mkForce pkgs.linuxPackages_7_0;
+  #  roles.nvidia.package = lib.mkForce (import ../../modules/nvidia/590_44_01.nix pkgs.linuxPackages_7_0);
+  #};
 }
