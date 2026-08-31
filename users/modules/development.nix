@@ -5,6 +5,7 @@
       pkgs.github-desktop
       pkgs.gh
       pkgs.lazygit
+      pkgs.shpool
       # pkgs.starship # TODO enable with "programs.starship.enable = true" instead
       pkgs.tree
 
