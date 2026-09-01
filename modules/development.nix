@@ -10,6 +10,8 @@
       roles.desktop.enable = lib.mkDefault true;
 
       programs.nix-ld.enable = true;
+
+      # programs.tmux.enable = true; # Using shpool instead
     })
     (lib.mkIf (config.roles.development.enable && config.roles.development.androidStudio.enable) {
       environment.systemPackages = [ pkgs.android-studio-full ];

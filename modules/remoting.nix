@@ -13,7 +13,5 @@
       };
       openFirewall = true;
     };
-
-    programs.tmux.enable = true;
   };
 }
