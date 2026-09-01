@@ -10,6 +10,7 @@ in
   ];
 
   # Enable roles
+  roles.laptop.enable = true;
   roles.development.enable = true;
   roles.development.androidStudio.enable = false;
   roles.remoting.enable = true;

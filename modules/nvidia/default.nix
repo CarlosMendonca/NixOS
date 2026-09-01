@@ -22,7 +22,6 @@ in
       modesetting.enable          = true;
       nvidiaSettings              = true;
       open                        = true;
-      dynamicBoost.enable         = true;
       powerManagement.enable      = true;
       powerManagement.finegrained = cfg.powerManagement.finegrained;
       prime                       = cfg.prime;

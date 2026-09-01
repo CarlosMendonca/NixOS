@@ -6,6 +6,7 @@
     ./desktop.nix
     ./external-monitor.nix
     ./development.nix
+    ./laptop.nix
     ./remoting.nix
     ./retro-gaming.nix
     ./sound.nix

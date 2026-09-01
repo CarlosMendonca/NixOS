@@ -26,7 +26,6 @@ in
 
       kernelModules = [
         "kvm-intel"
-        "wl"
       ];
 
       kernelPackages = pkgs.linuxPackages_7_1;
