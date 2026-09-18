@@ -10,6 +10,19 @@
     };
 
     dconf.settings = lib.mkMerge [
+      {
+        "org/gnome/settings-daemon/plugins/power" =
+          {
+            sleep-inactive-ac-timeout = systemConfig.roles.desktop.acIdleTimeoutSec;
+            sleep-inactive-ac-type = "suspend";
+          }
+          # Only set a battery timeout on hosts that actually have a battery;
+          # leave GNOME's own default alone otherwise.
+          // lib.optionalAttrs systemConfig.roles.laptop.enable {
+            sleep-inactive-battery-timeout = systemConfig.roles.laptop.batteryIdleTimeoutSec;
+            sleep-inactive-battery-type = "suspend";
+          };
+      }
       (lib.mkIf systemConfig.services.geoclue2.enable {
         "org/gnome/system/location" = {
           enabled = true;

@@ -18,11 +18,14 @@ in
   roles.containers.enable = true;
   # roles.virtualization.enable = true;
 
+  # This is a desktop with no battery, so only the AC timeout applies.
+  roles.desktop.acIdleTimeoutSec = 2 * 60 * 60; # 2h
+
   # Enable users
   users.carlos = {
     enable = true;
     trusted = true;
-    canUseDesktop = true;
+    canUseGraphics = true;
     canUseContainers = true;
     canUseVirtualization = true; # won't matter unless Virtualization role is enabled
   };

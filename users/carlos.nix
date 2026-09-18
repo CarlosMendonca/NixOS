@@ -7,7 +7,7 @@ in
   options.users.carlos = {
     enable = lib.mkEnableOption "Carlos' user configuration";
     trusted = lib.mkEnableOption "trusted user for Nix operations";
-    canUseDesktop = lib.mkEnableOption "desktop access (adds video group)";
+    canUseGraphics = lib.mkEnableOption "graphics hardware access (adds video group)";
     canUseVirtualization = lib.mkEnableOption "virtualization access (adds libvirtd group)";
     canUseContainers = lib.mkEnableOption "container access (adds podman group)";
     canUseAndroidStudio = lib.mkEnableOption "Android Studio access (adds kvm and adbusers groups)";
@@ -21,7 +21,7 @@ in
       extraGroups = [
           "wheel"
           "networkmanager" # doesn't need to be conditional because we assume every host has networking
-      ] ++ lib.optionals (config.users.carlos.canUseDesktop && config.roles.desktop.enable) [
+      ] ++ lib.optionals (config.users.carlos.canUseGraphics && config.roles.desktop.enable) [
           "video"
       ] ++ lib.optionals (config.users.carlos.canUseVirtualization && config.roles.virtualization.enable) [
           "libvirtd"

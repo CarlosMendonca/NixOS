@@ -11,6 +11,10 @@ in
 
   # Enable roles
   roles.laptop.enable = true;
+  roles.laptop.batteryIdleTimeoutSec = 15 * 60; # 15min
+
+  roles.desktop.acIdleTimeoutSec = 60 * 60; # 1h
+
   roles.development.enable = true;
   roles.development.androidStudio.enable = false;
   roles.remoting.enable = true;
@@ -22,7 +26,7 @@ in
   users.carlos = {
     enable = true;
     trusted = true;
-    canUseDesktop = true;
+    canUseGraphics = true;
 
     canUseAndroidStudio = true;
     canUseContainers = true;

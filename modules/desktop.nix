@@ -3,9 +3,30 @@
 
   options.roles.desktop = {
     enable = lib.mkEnableOption "Desktop role configuration";
+
+    acIdleTimeoutSec = lib.mkOption {
+      type = lib.types.int;
+      default = 7200; # 2h
+      description = ''
+        Idle duration (in seconds) before the system suspends while on AC
+        power. Drives `services.logind.settings.Login.IdleActionSec` (the
+        fallback that applies even before login, e.g. at the GDM greeter)
+        and is also read by the GNOME dconf settings for user `carlos`
+        (see users/modules/desktop.nix), so the two stay in sync.
+
+        There is no separate on-battery equivalent here since logind itself
+        doesn't distinguish AC/battery; see `roles.laptop.batteryIdleTimeoutSec`
+        for the GNOME-only battery timeout on laptop hosts.
+      '';
+    };
   };
 
   config = lib.mkIf config.roles.desktop.enable {
+    services.logind.settings.Login = {
+      IdleAction = "suspend";
+      IdleActionSec = config.roles.desktop.acIdleTimeoutSec;
+    };
+
     # Fonts -- specific fonts are configured by Home Manager
     fonts = {
       fontconfig.enable = true;
