@@ -4,7 +4,7 @@ let
 
   nvidiaDriver580_142_kernel6_12 = import ../../modules/nvidia/580_142.nix pkgs.linuxPackages_6_12;
   # nvidiaDriver595_80_kernel7_0   = import ../../modules/nvidia/595_80.nix  pkgs.linuxPackages_7_0;
-  nvidiaDriver595_71_05_kernel7_2 = import ../../modules/nvidia/595_71_05.nix pkgs.linuxPackages_7_2;
+  nvidiaDriver595_99_02_kernel7_2 = import ../../modules/nvidia/595_99_02.nix pkgs.linuxPackages_7_2;
 in
 {
   imports = [
@@ -110,7 +110,7 @@ in
     boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_2;
     roles.nvidia = {
       enable                      = true;
-      package                     = nvidiaDriver595_71_05_kernel7_2;
+      package                     = nvidiaDriver595_99_02_kernel7_2;
       powerManagement.finegrained = true;
       prime = {
         offload = {
