@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   nvidiaDriver590_44_01_kernel6_18 = import ../../modules/nvidia/590_44_01.nix pkgs.linuxPackages_6_18;
-  nvidiaDriver595_80_kernel7_1 = import ../../modules/nvidia/595_80.nix pkgs.linuxPackages_7_1;
+  nvidiaDriver595_71_05_kernel7_2 = import ../../modules/nvidia/595_71_05.nix pkgs.linuxPackages_7_2;
 in
 {
   imports = [
@@ -28,7 +28,7 @@ in
         "kvm-intel"
       ];
 
-      kernelPackages = pkgs.linuxPackages_7_1;
+      kernelPackages = pkgs.linuxPackages_7_2;
 
       kernelParams = [ ];
 
@@ -54,7 +54,7 @@ in
 
   roles.nvidia = {
     enable  = true;
-    package = nvidiaDriver595_80_kernel7_1;
+    package = nvidiaDriver595_71_05_kernel7_2;
   };
 
   services = {
