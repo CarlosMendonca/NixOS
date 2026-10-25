@@ -12,6 +12,7 @@ in
   # Enable roles
   roles.laptop.enable = true;
   roles.laptop.batteryIdleTimeoutSec = 15 * 60; # 15min
+  roles.laptop.hibernateDelaySec = 6 * 60 * 60; # 6h
 
   roles.desktop.acIdleTimeoutSec = 60 * 60; # 1h
 

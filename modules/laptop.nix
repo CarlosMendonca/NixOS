@@ -13,6 +13,20 @@
         the AC/pre-login equivalent.
       '';
     };
+
+    hibernateDelaySec = lib.mkOption {
+      type = lib.types.int;
+      default = 6 * 60 * 60; # 6h
+      description = ''
+        How long (in seconds) the system stays suspended before automatically
+        hibernating. Implemented by redirecting systemd's plain `suspend`
+        operation to `suspend-then-hibernate`, since GNOME itself has no
+        suspend-then-hibernate concept and always requests a plain suspend
+        (whether triggered by its idle timer, its Suspend menu item, or
+        `systemctl suspend`); this redirect makes every one of those paths
+        honor the delay below via `HibernateDelaySec`.
+      '';
+    };
   };
 
   config = lib.mkIf config.roles.laptop.enable (lib.mkMerge [
@@ -22,5 +36,10 @@
       # a failing nvidia-powerd, so it belongs here rather than in the nvidia module.
       hardware.nvidia.dynamicBoost.enable = lib.mkDefault true;
     })
+    {
+      systemd.sleep.settings.Sleep.HibernateDelaySec = config.roles.laptop.hibernateDelaySec;
+      systemd.services.systemd-suspend.serviceConfig.ExecStart =
+        lib.mkForce "${config.systemd.package}/lib/systemd/systemd-sleep suspend-then-hibernate";
+    }
   ]);
 }
