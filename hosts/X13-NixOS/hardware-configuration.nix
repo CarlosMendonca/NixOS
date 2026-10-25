@@ -4,7 +4,7 @@ let
 
   nvidiaDriver580_142_kernel6_12 = import ../../modules/nvidia/580_142.nix pkgs.linuxPackages_6_12;
   # nvidiaDriver595_80_kernel7_0   = import ../../modules/nvidia/595_80.nix  pkgs.linuxPackages_7_0;
-  nvidiaDriver595_99_02_kernel7_2 = import ../../modules/nvidia/595_99_02.nix pkgs.linuxPackages_7_2;
+  nvidiaDriver595_104_02_kernel7_2 = import ../../modules/nvidia/595_104_02.nix pkgs.linuxPackages_7_2;
 in
 {
   imports = [
@@ -50,7 +50,7 @@ in
         efi.canTouchEfiVariables        = true;
       };
 
-      # resumeDevice = "/dev/disk/by-label/swap"; # temporary disabling hibernation
+      resumeDevice = "/dev/disk/by-label/swap";
     }
 
     # AMD P-State optimisations
@@ -95,31 +95,32 @@ in
     '';
   };
 
-  systemd.targets = {
-    hibernate.enable              = false;
-    hybrid-sleep.enable           = false;
-    suspend-then-hibernate.enable = false;
-  }; # temporary disabling hibernation
+  # systemd.targets = {
+  #   hibernate.enable              = false;
+  #   hybrid-sleep.enable           = false;
+  #   suspend-then-hibernate.enable = false;
+  # }; # re-enabled hibernation; keeping this here in case it needs to be disabled again
 
   fileSystems."/"     = { device = "/dev/disk/by-label/nixos";  fsType = "ext4"; };
   fileSystems."/boot" = { device = "/dev/disk/by-label/SYSTEM"; fsType = "vfat"; };
 
   swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
-  specialisation.nvidia.configuration = {
-    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_7_2;
-    roles.nvidia = {
-      enable                      = true;
-      package                     = nvidiaDriver595_99_02_kernel7_2;
-      powerManagement.finegrained = true;
-      prime = {
-        offload = {
-          enable           = true;
-          enableOffloadCmd = true;
-        };
-        amdgpuBusId = "PCI:69:0:0";
-        nvidiaBusId  = "PCI:1:0:0";
+  roles.nvidia = {
+    enable                      = true;
+    package                     = nvidiaDriver595_104_02_kernel7_2;
+    powerManagement.finegrained = true;
+    prime = {
+      offload = {
+        enable           = true;
+        enableOffloadCmd = true;
       };
+      amdgpuBusId = "PCI:69:0:0";
+      nvidiaBusId  = "PCI:1:0:0";
     };
+  };
+
+  specialisation.no-dGPU.configuration = {
+    roles.nvidia.enable = lib.mkForce false;
   };
 }
